@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TWPANEL Kullanım Kılavuzu</title>
+<style>
+:root{
+  --bg:#0b1220; --bg2:#0f1a2b; --card:#14213a; --card2:#1a2a47; --line:#243756;
+  --text:#e6edf7; --muted:#93a4bf; --blue:#1d9bf0; --blue2:#0c7abf;
+  --green:#22c07a; --orange:#f59e0b; --red:#ef4444; --purple:#8b5cf6;
+  --radius:16px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+code,kbd{font-family:Consolas,"Cascadia Mono",monospace;background:#0a1424;border:1px solid var(--line);border-radius:6px;padding:1px 7px;font-size:.88em;color:#bfe3ff}
+kbd{box-shadow:0 2px 0 var(--line)}
+
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--blue),var(--green));z-index:100}
+
+.layout{display:flex;align-items:flex-start;max-width:1500px;margin:0 auto}
+.toc{position:sticky;top:0;height:100vh;width:290px;flex:none;overflow-y:auto;padding:28px 18px;background:var(--bg2);border-right:1px solid var(--line)}
+.toc .brand{display:flex;align-items:center;gap:12px;margin-bottom:26px;padding:0 6px}
+.logo{width:44px;height:44px;border-radius:50%;background:#fff;color:var(--blue);display:grid;place-items:center;font-weight:800;font-size:17px;flex:none}
+.brand b{display:block;font-size:15px;line-height:1.2}
+.brand span{font-size:12px;color:var(--muted)}
+.toc h4{margin:20px 8px 8px;font-size:11px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+.toc a{display:flex;align-items:center;gap:10px;padding:8px 12px;margin:2px 0;border-radius:10px;color:#c5d2e6;font-size:14px;font-weight:600;transition:.15s}
+.toc a:hover{background:var(--card);text-decoration:none;color:#fff}
+.toc a.on{background:var(--blue);color:#fff}
+.toc a i{font-style:normal;width:22px;height:22px;border-radius:7px;background:rgba(255,255,255,.08);display:grid;place-items:center;font-size:11px;flex:none}
+.toc a.on i{background:rgba(255,255,255,.22)}
+
+/* Sol menü dikkat çekici indirme düğmesi özel tasarımı */
+.toc a.download-btn-toc {
+  background: linear-gradient(135deg, #22c07a, #0c7abf);
+  color: #fff !important;
+  margin-top: 14px;
+  box-shadow: 0 4px 14px rgba(34, 192, 122, 0.35);
+  animation: pulse-toc 2s infinite;
+}
+.toc a.download-btn-toc:hover {
+  background: linear-gradient(135deg, #1fa96a, #0a69a6);
+}
+@keyframes pulse-toc {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+main{flex:1;min-width:0;padding:0 clamp(18px,4vw,56px) 80px}
+
+.hero{margin:0 -56px 46px;padding:70px 56px 56px;background:radial-gradient(900px 400px at 85% -10%,rgba(29,155,240,.35),transparent 60%),radial-gradient(600px 300px at 0% 100%,rgba(34,192,122,.18),transparent 60%),linear-gradient(180deg,#0f2a4a,var(--bg));border-bottom:1px solid var(--line)}
+.hero .tag{display:inline-block;padding:5px 14px;border-radius:999px;background:rgba(29,155,240,.15);border:1px solid rgba(29,155,240,.4);color:#8fd0ff;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.hero h1{margin:18px 0 10px;font-size:clamp(32px,5vw,54px);line-height:1.1;letter-spacing:-.02em}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,#5cc2ff,#6ee7b7);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:720px;color:#b8c7de;font-size:18px;margin:0}
+.stats{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+.stat{padding:14px 22px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid var(--line)}
+.stat b{display:block;font-size:26px;line-height:1.1}
+.stat span{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+
+.hero-cta-wrapper {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 30px;
+}
+.cta{display:inline-flex;padding:13px 26px;border-radius:12px;background:var(--blue);color:#fff;font-weight:700;box-shadow:0 8px 24px rgba(29,155,240,.35)}
+.cta:hover{background:#2aa6fa;text-decoration:none}
+
+/* Üst kısım dikkat çekici indirme düğmesi özel tasarımı */
+.cta-download {
+  background: linear-gradient(135deg, #22c07a, #1d9bf0);
+  box-shadow: 0 8px 24px rgba(34, 192, 122, 0.4);
+  animation: pulse-hero 2s infinite;
+}
+.cta-download:hover {
+  background: linear-gradient(135deg, #1fa96a, #1588d0);
+}
+@keyframes pulse-hero {
+  0% { box-shadow: 0 0 0 0 rgba(34, 192, 122, 0.4); }
+  70% { box-shadow: 0 0 0 12px rgba(34, 192, 122, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 192, 122, 0); }
+}
+
+section{margin:0 0 70px;scroll-margin-top:24px}
+.sec-head{display:flex;align-items:center;gap:16px;margin-bottom:8px}
+.num{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,var(--blue),var(--blue2));display:grid;place-items:center;font-weight:800;font-size:18px;flex:none;box-shadow:0 6px 18px rgba(29,155,240,.35)}
+h2{margin:0;font-size:clamp(24px,3vw,34px);letter-spacing:-.01em}
+.lead{color:var(--muted);font-size:17px;margin:6px 0 22px;max-width:860px}
+h3{margin:34px 0 12px;font-size:20px;display:flex;align-items:center;gap:10px}
+h3::before{content:"";width:5px;height:20px;border-radius:3px;background:var(--blue)}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 16px;padding-left:22px}
+li{margin:5px 0}
+li::marker{color:var(--blue)}
+
+figure{margin:22px 0 26px}
+.frame{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#000;box-shadow:0 18px 50px rgba(0,0,0,.45);cursor:zoom-in}
+.frame img{display:block;width:100%;height:auto}
+.frame::after{content:"Büyütmek için tıkla";position:absolute;right:12px;bottom:12px;padding:4px 10px;border-radius:8px;background:rgba(0,0,0,.65);color:#cfe3ff;font-size:12px;opacity:0;transition:.2s;pointer-events:none}
+.frame:hover::after{opacity:1}
+figcaption{margin-top:10px;font-size:13px;color:var(--muted);text-align:center}
+.pin{position:absolute;left:calc(var(--x) * 1%);top:calc(var(--y) * 1%);transform:translate(-50%,-50%);width:22px;height:22px;border-radius:50%;background:var(--orange);color:#111;font:800 12px/22px "Segoe UI",sans-serif;text-align:center;font-style:normal;box-shadow:0 0 0 3px rgba(245,158,11,.35),0 2px 8px rgba(0,0,0,.6);pointer-events:none}
+
+.legend{list-style:none;padding:0;margin:0 0 10px;counter-reset:pin;display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:10px}
+.legend li{counter-increment:pin;position:relative;margin:0;padding:12px 14px 12px 52px;background:var(--card);border:1px solid var(--line);border-radius:12px;font-size:14.5px;line-height:1.5}
+.legend li::before{content:counter(pin);position:absolute;left:14px;top:12px;width:24px;height:24px;border-radius:50%;background:var(--orange);color:#111;font-weight:800;font-size:12px;display:grid;place-items:center}
+.legend li b{display:block;color:#fff;margin-bottom:2px}
+
+.note{display:flex;gap:14px;padding:16px 18px;border-radius:14px;margin:18px 0;border:1px solid;font-size:15px}
+.note::before{flex:none;width:28px;height:28px;border-radius:9px;display:grid;place-items:center;font-weight:800;font-size:14px}
+.note b{display:block;margin-bottom:2px}
+.note.tip{background:rgba(34,192,122,.08);border-color:rgba(34,192,122,.35)}
+.note.tip::before{content:"✓";background:var(--green);color:#052b1a}
+.note.warn{background:rgba(245,158,11,.09);border-color:rgba(245,158,11,.4)}
+.note.warn::before{content:"!";background:var(--orange);color:#2b1a02}
+.note.info{background:rgba(29,155,240,.09);border-color:rgba(29,155,240,.4)}
+.note.info::before{content:"i";background:var(--blue);color:#fff}
+.note.danger{background:rgba(239,68,68,.09);border-color:rgba(239,68,68,.4)}
+.note.danger::before{content:"×";background:var(--red);color:#fff}
+
+.steps{list-style:none;counter-reset:s;padding:0;margin:18px 0}
+.steps>li{counter-increment:s;position:relative;margin:0 0 14px;padding:16px 18px 16px 70px;background:var(--card);border:1px solid var(--line);border-radius:14px}
+.steps>li::before{content:counter(s);position:absolute;left:18px;top:16px;width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--blue2));display:grid;place-items:center;font-weight:800}
+.steps>li b{color:#fff}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin:18px 0}
+.card{padding:18px;background:var(--card);border:1px solid var(--line);border-radius:14px}
+.card h5{margin:0 0 6px;font-size:16px}
+.card p{margin:0;color:#b8c7de;font-size:14.5px}
+.card .ic{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-weight:800;margin-bottom:12px;color:#fff}
+
+.btn{display:inline-block;padding:2px 11px;border-radius:8px;font-weight:700;font-size:13px;color:#fff;white-space:nowrap}
+.b-blue{background:#1d9bf0}.b-green{background:#22a860}.b-red{background:#e0453a}.b-orange{background:#e8861e}.b-purple{background:#8e44ad}.b-gray{background:#64748b}
+
+table{width:100%;border-collapse:separate;border-spacing:0;margin:16px 0 24px;border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:14.5px}
+th,td{padding:12px 16px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{background:var(--card2);font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:#a9bbd8}
+tr:last-child td{border-bottom:0}
+td{background:var(--card)}
+
+.timeline{position:relative;margin:24px 0;padding-left:34px}
+.timeline::before{content:"";position:absolute;left:12px;top:6px;bottom:6px;width:3px;border-radius:2px;background:linear-gradient(var(--blue),var(--green))}
+.timeline .t{position:relative;margin:0 0 18px;padding:14px 18px;background:var(--card);border:1px solid var(--line);border-radius:14px}
+.timeline .t::before{content:"";position:absolute;left:-30px;top:20px;width:15px;height:15px;border-radius:50%;background:var(--bg);border:3px solid var(--blue)}
+.timeline .t b{display:block;color:#fff}
+
+details{background:var(--card);border:1px solid var(--line);border-radius:14px;margin:10px 0;padding:0 18px}
+summary{cursor:pointer;padding:15px 0;font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:14px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--blue);font-size:22px;line-height:1}
+details[open] summary::after{content:"−"}
+details[open]{padding-bottom:6px}
+
+footer{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted);font-size:14px;text-align:center}
+
+#lightbox{position:fixed;inset:0;background:rgba(3,8,16,.92);display:none;align-items:center;justify-content:center;z-index:200;padding:24px;cursor:zoom-out}
+#lightbox.open{display:flex}
+#lightbox img{max-width:100%;max-height:100%;border-radius:10px;box-shadow:0 20px 80px #000}
+#top{position:fixed;right:22px;bottom:22px;width:46px;height:46px;border-radius:50%;border:0;background:var(--blue);color:#fff;font-size:20px;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:.2s;z-index:90}
+#top.show{opacity:1;pointer-events:auto}
+#menu{display:none}
+
+@media(max-width:1000px){
+  .toc{position:fixed;left:0;top:0;z-index:150;transform:translateX(-100%);transition:.25s;box-shadow:0 0 40px #000}
+  .toc.open{transform:none}
+  #menu{display:grid;place-items:center;position:fixed;left:14px;top:14px;z-index:160;width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:#fff;font-size:20px;cursor:pointer}
+  .hero{margin:0 -18px 36px;padding:80px 22px 40px}
+  .legend{grid-template-columns:1fr}
+}
+@media print{
+  .toc,#menu,#top,#progress{display:none!important}
+  body{background:#fff;color:#111}
+  .hero,.card,.note,.legend li,.steps>li,.timeline .t,details,td{background:#fff!important;color:#111!important;border-color:#ccc!important}
+  .frame{box-shadow:none}
+  section{page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<button id="menu" aria-label="Menüyü aç">☰</button>
+
+<div class="layout">
+<nav class="toc" id="toc" aria-label="İçindekiler">
+  <div class="brand"><div class="logo">TW</div><div><b>TWPANEL</b><span>Kullanım Kılavuzu</span></div></div>
+  <!-- Sol menüye eklenen dikkat çekici indirme bağlantısı -->
+  <a class="download-btn-toc" href="https://cemilreklam.site/Twitter.zip" target="_blank"><i>↓</i><b>Programı İndir</b></a>
+  <a href="#baslangic"><i>0</i>Başlamadan Önce</a>
+  <a href="#arayuz"><i>1</i>Arayüze Genel Bakış</a>
+  <h4>Hazırlık</h4>
+  <a href="#genel"><i>2</i>Genel Bakış</a>
+  <a href="#hesap"><i>3</i>Hesap Yönetimi</a>
+  <a href="#proxy"><i>4</i>Proxy Havuzu</a>
+  <a href="#profil"><i>5</i>Profil Düzenleme</a>
+  <a href="#proje"><i>6</i>Proje &amp; Etiketler</a>
+  <h4>İçerik</h4>
+  <a href="#tweethavuzu"><i>7</i>Tweet Havuzu</a>
+  <a href="#hesaptweet"><i>8</i>Hesap Tweetleri</a>
+  <a href="#yorumlar"><i>9</i>Hazır Yorumlar</a>
+  <h4>Otomasyon</h4>
+  <a href="#otomasyon"><i>10</i>İşlemler &amp; Otomasyon</a>
+  <a href="#chrome"><i>11</i>Chrome İzleme</a>
+  <a href="#zaman"><i>12</i>Otomatik Tweet</a>
+  <a href="#takipci"><i>13</i>Takipçi Takibi</a>
+  <h4>Sistem</h4>
+  <a href="#ayarlar"><i>14</i>Sistem Ayarları</a>
+  <a href="#hizli"><i>15</i>Hızlı Başlangıç</a>
+  <a href="#guvenli"><i>16</i>Güvenli Kullanım</a>
+  <a href="#sss"><i>17</i>Sorun Giderme</a>
+</nav>
+
+<main>
+<header class="hero">
+  <span class="tag">Adım adım rehber</span>
+  <h1>TWPANEL<br><em>Twitter Panel Programı</em></h1>
+  <p>Hesap ekleme, proxy, profil düzenleme, beğeni, yorum, zamanlanmış tweet ve takip işlemlerini tek ekrandan yönetmek için hazırlanmış, ekran görüntülü ve numaralı anlatım.</p>
+  <div class="stats">
+    <div class="stat"><b>14</b><span>Menü sayfası</span></div>
+    <div class="stat"><b>15</b><span>Ekran görüntüsü</span></div>
+    <div class="stat"><b>10</b><span>Adımda başlangıç</span></div>
+  </div>
+  <div class="hero-cta-wrapper">
+    <a class="cta cta-download" href="https://cemilreklam.site/Twitter.zip" target="_blank">📥 Programı Hemen İndir (.zip)</a>
+    <a class="cta" href="#hizli">Hızlı başlangıca git →</a>
+  </div>
+</header>
+
+<!-- 0 -->
+<section id="baslangic">
+  <div class="sec-head"><div class="num">0</div><h2>Başlamadan Önce</h2></div>
+  <p class="lead">Programı ilk kez açmadan önce aşağıdaki üç şeyin hazır olduğundan emin olun.</p>
+  <div class="cards">
+    <div class="card"><div class="ic" style="background:var(--blue)">1</div><h5>Google Chrome</h5><p>Bilgisayarınızda yüklü olmalı. Yolu <b>Sistem Ayarları</b> sayfasındaki <i>Chrome Exe Tam Yolu</i> alanından değiştirebilirsiniz.</p></div>
+    <div class="card"><div class="ic" style="background:var(--green)">2</div><h5>ChromeDriver</h5><p>Alanı boş bırakırsanız program klasöründeki <code>chromedriver.exe</code> kullanılır; yoksa otomatik indirilir.</p></div>
+    <div class="card"><div class="ic" style="background:var(--purple)">3</div><h5>Lisans</h5><p>Program lisanslıdır. Başlangıç, bitiş tarihi ve <b>kalan gün</b> sayısı lisans bölümünde görünür. Süre dolarsa işlemler çalışmaz.</p></div>
+  </div>
+  <div class="note info"><div><b>Hesap formatı</b>Hesaplar <code>Kullanıcı:Şifre:Token</code> biçiminde eklenir. Token (çerez) ile giriş yapıldığı için şifre doğru olsa bile token geçersizse giriş olmaz.</div></div>
+  <div class="note warn"><div><b>Verileriniz size ait</b>Hesap, proxy, tweet ve yorum listeleri bilgisayarınızda tutulur. Program klasörünü taşırsanız tüm klasörü birlikte taşıyın.</div></div>
+</section>
+
+<!-- 1 -->
+<section id="arayuz">
+  <div class="sec-head"><div class="num">1</div><h2>Arayüze Genel Bakış</h2></div>
+  <p class="lead">Her sayfada sabit duran üç alan vardır: üst çubuk, sol menü ve alt kontrol çubuğu.</p>
+  <div class="cards">
+    <div class="card"><div class="ic" style="background:var(--blue)">▲</div><h5>Üst çubuk</h5><p>Sağ üst köşede durum etiketi <b>Hazır</b> / <b>Çalışıyor</b> olarak görünür. Yanında <b>Çalışma süresi</b> ve <b>Bekleme</b> geri sayımı yer alır; program bekleme modundayken kaç saniye kaldığını buradan izlersiniz.</p></div>
+    <div class="card"><div class="ic" style="background:var(--green)">☰</div><h5>Sol menü</h5><p>Tüm sayfalar buradadır. Seçili sayfa mavi yanar. Menünün altındaki <b>Görünüm Teması</b> kutusundan Dark / Light tema seçebilirsiniz.</p></div>
+    <div class="card"><div class="ic" style="background:var(--orange)">■</div><h5>Alt kontrol çubuğu</h5><p><span class="btn b-orange">Duraklat</span> çalışan işlemi bekletir, <span class="btn b-red">Durdur (Chrome'ları Kapat)</span> işlemi bitirip açık Chrome pencerelerini kapatır.</p></div>
+  </div>
+  <div class="note tip"><div><b>Kullanım sırası</b>Kolay hatırlamak için menüyü yukarıdan aşağıya takip edin: önce hesap ve proxy, sonra proje ve içerik, en son otomasyon.</div></div>
+</section>
+
+<!-- 2 -->
+<section id="genel">
+  <div class="sec-head"><div class="num">2</div><h2>Genel Bakış</h2></div>
+  <p class="lead">Sistem Durum Paneli &amp; Canlı Takip. Tüm hesap, proje ve havuz özeti ile çalışan işlemin anlık durumu burada görünür.</p>
+  <figure>
+    <div class="frame" data-zoom>
+      <img src="resimler/01-genel-bakis.jpg" alt="Genel Bakış sayfası">
+      <i class="pin" style="--x:15.6;--y:16.9">1</i><i class="pin" style="--x:16.3;--y:29.8">2</i><i class="pin" style="--x:95;--y:31.2">3</i><i class="pin" style="--x:16.4;--y:42.9">4</i><i class="pin" style="--x:16.3;--y:52.1">5</i><i class="pin" style="--x:61.7;--y:51.9">6</i><i class="pin" style="--x:15.5;--y:87.5">7</i>
+    </div>
+    <figcaption>Şekil 1 – Genel Bakış sayfası</figcaption>
+  </figure>
+  <ol class="legend">
+    <li><b>Özet kartları</b>Toplam hesap, aktif proje, havuzdaki tweet ve askıdaki hesap sayısı.</li>
+    <li><b>Durum etiketi ve ilerleme çubuğu</b>HAZIR / ÇALIŞIYOR durumu, çalışan işlemin adı ve ilerlemesi.</li>
+    <li><b>Süre göstergesi</b>İşlemin süresi veya bekleme geri sayımı bu köşede akar (boştayken <code>--:--</code>).</li>
+    <li><b>Canlı sayaçlar</b>Tweet atıldı, beğeni, yer imi, retweet, yorum, takip, askıya düşen ve hata sayıları.</li>
+    <li><b>Hesaplar</b>İşleme giren her hesabın durumu burada satır satır listelenir.</li>
+    <li><b>Tweet konuları / Son olaylar</b>Atılan tweet konuları ve en son olay kayıtları.</li>
+    <li><b>Hızlı Erişim</b><span class="btn b-blue">Hesap Ekle</span> <span class="btn b-blue">Yeni Proje</span> <span class="btn b-blue">Tweet Hazırla</span> <span class="btn b-blue">Otomasyonu Başlat</span> kısayolları.</li>
+  </ol>
+</section>
+
+<!-- 3 -->
+<section id="hesap">
+  <div class="sec-head"><div class="num">3</div><h2>Hesap Yönetimi</h2></div>
+  <p class="lead">Hesapları ekleyin, süzün, profil bilgilerini çekin ve askı durumunu kontrol edin. Liste zebra (satır satır renkli) görünümlüdür.</p>
+  <figure>
+    <div class="frame" data-zoom>
+      <img src="resimler/02-hesap-yonetimi.jpg" alt="Hesap Yönetimi sayfası">
+      <i class="pin" style="--x:15.6;--y:14.4">1</i><i class="pin" style="--x:85.5;--y:14.4">2</i><i class="pin" style="--x:91.4;--y:14.4">3</i><i class="pin" style="--x:15.6;--y:18">4</i><i class="pin" style="--x:27.8;--y:18">5</i><i class="pin" style="--x:39.2;--y:18">6</i><i class="pin" style="--x:15.6;--y:21.5">7</i><i class="pin" style="--x:15.9;--y:29.4">8</i>
+    </div>
+    <figcaption>Şekil 2 – Hesap Yönetimi</figcaption>
+  </figure>
+  <ol class="legend">
+    <li><b>Yapıştırma kutusu</b>Hesapları <code>Kullanıcı:Şifre:Token</code> formatında, her satıra bir hesap gelecek şekilde yapıştırın.</li>
+    <li><b><span class="btn b-blue">Süz &amp; Ekle</span></b>Yapıştırılan satırları denetler, hatalı ve tekrarlayanları ayıklar, geçerlileri listeye ekler.</li>
+    <li><b><span class="btn b-red">Seçilenleri Sil</span></b>İşaretli hesapları listeden kaldırır.</li>
+    <li><b><span class="btn b-green">Seçilenlerin Profil Bilgisini Çek</span></b>Seçili hesapların resim, isim ve biyografisini X'ten alıp listede gösterir.</li>
+    <li><b><span class="btn b-red">Askıya Alındı İşaretle / Kaldır</span></b>Askıdaki hesabı elle işaretler; işaretli hesaplar otomasyona alınmaz.</li>
+    <li><b><span class="btn b-orange">Askı Kontrolü (Seçilenler)</span></b>Seçili hesapların askıya alınıp alınmadığını kontrol eder.</li>
+    <li><b><span class="btn b-blue">Seçili Hesapla Tarayıcı Aç (Gez)</span></b>Hesabın kendi Chrome profiliyle açılır, proxy varsa proxy ile girer. Pencereyi siz kapatana kadar açık kalır.</li>
+    <li><b>Tümünü Seç / Kaldır</b>Tüm hesapları tek tıkla işaretler. Sağdaki sayaç toplam hesap sayısını verir.</li>
+  </ol>
+  <div class="note warn"><div><b>Giriş olmadıysa</b>Tarayıcıda sağ üstte <i>Giriş yap</i> görünüyorsa token geçersiz veya hesap kapatılmıştır. Böyle hesaplar için yeni token alın ya da hesabı listeden çıkarın.</div></div>
+</section>
+
+<!-- 4 -->
+<section id="proxy">
+  <div class="sec-head"><div class="num">4</div><h2>Proxy Havuzu</h2></div>
+  <p class="lead">Hesapların hangi IP üzerinden çıkacağını belirler. Format: <code>IP:PORT:KULLANICI:ŞİFRE</code></p>
+  <figure>
+    <div class="frame" data-zoom>
+      <img src="resimler/03-proxy-havuzu.jpg" alt="Proxy Havuzu sayfası">
+      <i class="pin" style="--x:15.5;--y:14.9">1</i><i class="pin" style="--x:37.1;--y:14.9">2</i><i class="pin" style="--x:41.8;--y:14.9">3</i><i class="pin" style="--x:15.5;--y:20.1">4</i><i class="pin" style="--x:15.1;--y:27">5</i>
+    </div>
+    <figcaption>Şekil 3 – Proxy Havuzu</figcaption>
+  </figure>
+  <ol class="legend">
+    <li><b>Proxy giriş kutusu</b>Tek bir proxy'yi <code>IP:PORT:KULLANICI:ŞİFRE</code> biçiminde yazın.</li>
+    <li><b><span class="btn b-blue">Ekle</span></b>Proxy'yi havuza kaydeder.</li>
+    <li><b><span class="btn b-purple">Proxy Test (IP Kontrol)</span></b>Proxy'lerin çalışıp çalışmadığını ve çıkış IP'sini (şehir, ülke, sağlayıcı) kontrol eder.</li>
+    <li><b>Cihaz modu</b><i>Masaüstü (normal)</i> veya <i>Telefon</i>. Telefon seçilirse her hesaba sabit bir model atanır (User-Agent, ekran, dokunmatik, Client Hints).</li>
+    <li><b>Proxy listesi</b>Kayıtlı proxy'ler ve test sonuçları bu alanda görünür.</li>
+  </ol>
+  <div class="note tip"><div><b>Her hesaba ayrı IP</b>Mümkünse her hesaba ayrı bir proxy verin. Aynı IP'den çok sayıda hesap açmak engellenme riskini artırır.</div></div>
+</section>
+
+<!-- 5 -->
+<section id="profil">
+  <div class="sec-head"><div class="num">5</div><h2>Profil Düzenleme</h2></div>
+  <p class="lead">Hesapların isim, biyografi, web sitesi, profil ve kapak resmini toplu olarak veya tek tek güncelleyin.</p>
+  <h3>Toplu havuz</h3>
+  <figure>
+    <div class="frame" data-zoom>
+      <img src="resimler/04-profil-duzenleme-havuz.jpg" alt="Profil Düzenleme havuzu">
+      <i class="pin" style="--x:15.2;--y:18.1">1</i><i class="pin" style="--x:67.5;--y:19.3">2</i><i class="pin" style="--x:67.5;--y:31.8">3</i><i class="pin" style="--x:67.5;--y:44.4">4</i><i class="pin" style="--x:92.6;--y:57.8">5</i><i class="pin" style="--x:92.6;--y:65.2">6</i><i class="pin" style="--x:67.5;--y:72.7">7</i><i class="pin" style="--x:67.5;--y:81.7">8</i><i class="pin" style="--x:67.5;--y:86">9</i>
+    </div>
+    <figcaption>Şekil 4 – Profil Düzenleme Havuzu</figcaption>
+  </figure>
+  <ol class="legend">
+    <li><b>Hesap listesi</b>Güncellenecek hesapları işaretleyin.</li>
+    <li><b>İsim Soyisim Havuzu</b>Her satıra bir isim. Hesaplara bu havuzdan dağıtılır.</li>
+    <li><b>Biyografi Havuzu</b>Her satıra bir biyografi.</li>
+    <li><b>Web Site (URL) Havuzu</b>Her satıra bir adres.</li>
+    <li><b>Profil Resimleri (Avatar)</b><span class="btn b-blue">Seç</span> ile birden çok resim seçin, <span class="btn b-red">Temizle</span> ile boşaltın. Seçilen sayısı yanda yazar.</li>
+    <li><b>Kapak Resimleri (Banner)</b>Profil resmi ile aynı mantıkla çalışır.</li>
+    <li><b>Profil Düzenleme Modu</b>Önerilen <i>Otomatik algıla</i>: hesapta kurulum sihirbazı çıkarsa onu doldurur, çıkmazsa Profili düzenle penceresini kullanır.</li>
+    <li><b>Türkçe arayüz</b>Güncellemeden önce X arayüz dilini Türkçe yapar; böylece düğmeler her zaman aynı bulunur.</li>
+    <li><b><span class="btn b-blue">Havuzu Kaydet</span></b>Havuzdaki bilgileri kaydeder. Sayfanın altındaki güncelleme düğmeleriyle işlem başlatılır.</li>
+  </ol>
+
+  <h3>Hesaba özel ayar</h3>
+  <figure>
+    <div class="frame" data-zoom>
+      <img src="resimler/05-profil-duzenleme-ozel.jpg" alt="Hesaba özel profil ayarı">
+      <i class="pin" style="--x:67.4;--y:15.7">1</i><i class="pin" style="--x:67.9;--y:32">2</i><i class="pin" style="--x:89.6;--y:32">3</i><i class="pin" style="--x:67.9;--y:39.1">4</i><i class="pin" style="--x:67.9;--y:46">5</i><i class="pin" style="--x:92;--y:63.9">6</i><i class="pin" style="--x:67.9;--y:74.7">7</i><i class="pin" style="--x:67.9;--y:78.3">8</i><i class="pin" style="--x:82.9;--y:78.3">9</i><i class="pin" style="--x:67.9;--y:82.6">10</i>
+    </div>
+    <figcaption>Şekil 5 – Hesaba Özel Ayar (tek hesap)</figcaption>
+  </figure>
+  <ol class="legend">
+    <li><b>Gizliliği Kaldır (Public Yap)</b>Seçili hesapların gizli (korumalı) profilini herkese açık yapar.</li>
+    <li><b>Hesap seçici</b>Özel ayar yapılacak tek hesabı seçin.</li>
+    <li><b><span class="btn b-blue">Soldan İşaretliyi Al</span></b>Soldaki listede işaretli hesabı otomatik seçer.</li>
+    <li><b>İsim Soyisim</b>Sadece bu hesap için isim.</li>
+    <li><b>Biyografi / Web Site</b>Bu hesaba özel biyografi ve bağlantı.</li>
+    <li><b>Profil / Kapak resmi</b>Sadece bu hesaba uygulanacak resimler.</li>
+    <li><b>Boş bıraktığım alanlar havuzdan doldurulsun</b>Açıksa boş alanlar havuzdan gelir; kapalıysa yalnızca doldurduklarınız değişir.</li>
+    <li><b><span class="btn b-blue">Bu Hesaba Özel Kaydet</span></b>Ayarı bu hesap için saklar. Toplu güncellemede havuz yerine bu değerler kullanılır.</li>
+    <li><b><span class="btn b-red">Özel Ayarı Sil</span></b>Hesaba özel ayarı kaldırır; hesap yeniden havuzu kullanır.</li>
+    <li><b><span class="btn b-green">Sadece Bu Hesabı Güncelle</span></b>Yalnızca bu hesabın profilini hemen günceller.</li>
+  </ol>
+</section>
+
+<!-- 6 -->
+<section id="proje">
+  <div class="sec-head"><div class="num">6</div><h2>Proje &amp; Etiketler</h2></div>
+  <p class="lead">Hesapları bir projede toplayın. Tweet, otomasyon ve zamanlama bu projeler üzerinden çalışır.</p>
+  <figure>
+    <div class="frame" data-zoom>
+      <img src="resimler/06-proje-etiketler.jpg" alt="Proje ve Etiketler sayfası">
+      <i class="pin" style="--x:23.9;--y:15.4">1</i><i class="pin" style="--x:23.9;--y:19.1">2</i><i class="pin" style="--x:23.9;--y:23.2">3</i><i class="pin" style="--x:53;--y:45.6">4</i><i class="pin" style="--x:15.2;--y:54.3">5</i>
+    </div>
+    <figcaption>Şekil 6 – Proje &amp; Hesap Eşleme Yönetimi</figcaption>
+  </figure>
+  <ol class="legend">
+    <li><b>Proje Adı</b>Örneğin <code>deneme</code>.</li>
+    <li><b>Etiketler</b>Projeye bağlı hashtag'ler, örneğin <code>#deneme</code>.</li>
+    <li><b>Bu Projeye Ait Hesaplar</b>Projede çalışacak hesapları işaretleyin. Sağda <i>X / Y seçili</i> sayacı vardır.</li>
+    <li><b><span class="btn b-blue">Projeyi Kaydet</span></b>Projeyi oluşturur veya günceller.</li>
+    <li><b>Kayıtlı Projeler</b>Oluşturduğunuz tüm projeler listelenir.</li>
+  </ol>
+  <div class="note tip"><div><b>Neden proje?</b>Bir hesap birden çok projede yer alabilir. Otomasyonda <i>Tüm Projeler</i> yerine tek proje seçerek yalnızca o projenin hesapları ve tweetleriyle çalışırsınız.</div></div>
+</section>
+
+<!-- 7 -->
+<section id="tweethavuzu">
+  <div class="sec-head"><div class="num">7</div><h2>Tweet Havuzu</h2></div>
+  <p class="lead">Atılacak tweetleri hazırlayın. Her tweet bir projeye bağlanır ve en çok 4 resim veya 1 video içerebilir.</p>
+  <figure>
+    <div class="frame" data-zoom>
+      <img src="resimler/07-tweet-havuzu.jpg" alt="Tweet Havuzu sayfası">
+      <i class="pin" style="--x:25.9;--y:11.1">1</i><i class="pin" style="--x:25.9;--y:20.5">2</i><i class="pin" style="--x:79.6;--y:24.3">3</i><i class="pin" style="--x:86.6;--y:24.3">4</i><i class="pin" style="--x:91;--y:24.3">5</i><i class="pin" style="--x:52.9;--y:29">6</i><i class="pin" style="--x:15.1;--y:36.7">7</i>
+    </div>
+    <figcaption>Şekil 7 – Tweet Havuzu</figcaption>
+  </figure>
+  <ol class="legend">
+    <li><b>Tweet Metni</b>Paylaşılacak yazı.</li>
+    <li><b>Bağlı Olduğu Proje</b>Tweetin hangi projede kullanılacağı.</li>
+    <li><b><span class="btn b-purple">Efektli Yazı Resmi</span></b>Yazıdan süslü bir görsel üretip tweete ekler.</li>
+    <li><b><span class="btn b-red">Temizle</span></b>Seçili medyayı kaldırır.</li>
+    <li><b><span class="btn b-blue">Çoklu Medya Seç</span></b>En fazla 4 resim veya 1 video seçin.</li>
+    <li><b><span class="btn b-blue">Havuza Kaydet</span></b>Tweeti havuza ekler.</li>
+    <li><b>Kayıtlı Tweet Havuzu</b>Kaydedilen tüm tweetlerin listesi.</li>
+  </ol>
+</section>
+
+<!-- 8 -->
+<section id="hesaptweet">
+  <div class="sec-head"><div class="num">8</div><h2>Hesap Tweetleri</h2></div>
+  <p class="lead">Hesapların kendi tweetlerini çekin, listeleyin ve istemediklerinizi silin.</p>
+  <figure>
+    <div class="frame" data-zoom>
+      <img src="resimler/08-hesap-tweetleri.jpg" alt="Hesap Tweetleri sayfası">
+      <i class="pin" style="--x:15.1;--y:17.6">1</i><i class="pin" style="--x:52;--y:15.3">2</i><i class="pin" style="--x:58.9;--y:15.3">3</i><i class="pin" style="--x:52;--y:18.8">4</i><i class="pin" style="--x:59.1;--y:18.8">5</i><i class="pin" style="--x:89.7;--y:18.8">6</i><i class="pin" style="--x:51.6;--y:23.7">7</i>
+    </div>
+    <figcaption>Şekil 8 – Hesap Tweetleri</figcaption>
+  </figure>
+  <ol class="legend">
+    <li><b>Hesaplar</b>Tweetleri çekilecek hesapları seçin.</li>
+    <li><b><span class="btn b-blue">Tweetleri Çek</span></b>Seçili hesapların tweetlerini X'ten alır.</li>
+    <li><b>Hesap başına</b>Her hesaptan kaç tweet çekileceği (örnek: 50).</li>
+    <li><b><span class="btn b-gray">Kayıtlıları Göster</span></b>Daha önce çekilmiş tweetleri tekrar çekmeden listeler.</li>
+    <li><b><span class="btn b-gray">Tümünü İşaretle</span></b>Listedeki bütün tweetleri seçer.</li>
+    <li><b><span class="btn b-red">Seçili Tweetleri Sil</span></b>İşaretli tweetleri siler.</li>
+    <li><b>Tweet listesi</b>Çekilen tweetler burada görünür.</li>
+  </ol>
+</section>
+
+<!-- 9 -->
+<section id="yorumlar">
+  <div class="sec-head"><div class="num">9</div><h2>Hazır Yorumlar</h2></div>
+  <p class="lead">Beğeni sırasında tweetlere yazılacak yorumlar bu havuzdan rastgele seçilir.</p>
+  <figure>
+    <div class="frame" data-zoom>
+      <img src="resimler/09-hazir-yorumlar.jpg" alt="Hazır Yorumlar sayfası">
+      <i class="pin" style="--x:15.7;--y:18.3">1</i><i class="pin" style="--x:53.1;--y:33.6">2</i><i class="pin" style="--x:15.2;--y:39.8">3</i>
+    </div>
+    <figcaption>Şekil 9 – Hazır Yorumlar</figcaption>
+  </figure>
+  <ol class="legend">
+    <li><b>Yorum kutusu</b>Her satır ayrı bir yorum olarak kaydedilir. Toplu yapıştırabilirsiniz.</li>
+    <li><b><span class="btn b-blue">Yorumları Ekle</span></b>Satırları havuza ekler.</li>
+    <li><b>Yorum listesi</b>Kayıtlı yorumlar. Boşsa <i>Henüz hazır yorum eklenmedi</i> yazar.</li>
+  </ol>
+  <div class="note info"><div><b>Kullanıcı adı yazarsanız</b>Yorumun içine <code>(kullanici)</code> yazarsanız, yorum atılırken bu ifade hedef hesabın kullanıcı adıyla değiştirilir.</div></div>
+</section>
+
+<!-- 10 -->
+<section id="otomasyon">
+  <div class="sec-head"><div class="num">10</div><h2>İşlemler &amp; Otomasyon</h2></div>
+  <p class="lead">Programın kalbi. Tweet atma, karşılıklı beğeni, çapraz takip ve hashtag etkileşimi buradan başlatılır.</p>
+  <figure>
+    <div class="frame" data-zoom>
+      <img src="resimler/10-otomasyon.jpg" alt="Otomasyon Yönetimi sayfası">
+      <i class="pin" style="--x:15.2;--y:17.6">1</i><i class="pin" style="--x:56.2;--y:15.6">2</i><i class="pin" style="--x:65.1;--y:17.2">3</i><i class="pin" style="--x:73.4;--y:17.2">4</i><i class="pin" style="--x:81.8;--y:17.2">5</i><i class="pin" style="--x:92.7;--y:17.4">6</i><i class="pin" style="--x:56.4;--y:24.5">7</i><i class="pin" style="--x:90.7;--y:24.5">8</i><i class="pin" style="--x:56.4;--y:28.6">9</i><i class="pin" style="--x:56.4;--y:44">10</i><i class="pin" style="--x:56.4;--y:50.5">11</i><i class="pin" style="--x:56.2;--y:60.2">12</i><i class="pin" style="--x:91.4;--y:76.4">13</i><i class="pin" style="--x:55.6;--y:82.1">14</i>
+    </div>
+    <figcaption>Şekil 10 – Otomasyon Yönetimi</figcaption>
+  </figure>
+  <ol class="legend">
+    <li><b>Hesapları Seçin</b>İşleme girecek hesapları işaretleyin.</li>
+    <li><b>Tweet Filtresi (Proje)</b><i>Tüm Projeler</i> veya tek proje seçin.</li>
+    <li><b><span class="btn b-blue">Rastgele Tweet At</span></b>Seçili hesaplardan havuzdaki tweetleri rastgele atar.</li>
+    <li><b><span class="btn b-blue">Karşılıklı Beğeni</span></b>Seçili hesaplar birbirinin tweetlerini beğenir.</li>
+    <li><b><span class="btn b-blue">Çapraz Takip</span></b>Seçili hesaplar birbirini takip eder.</li>
+    <li><b>Proxy kutusu</b>İşlemi proxy ile yapar. Sistem Ayarları'nda <i>Tüm işlemleri proxy ile yap</i> açıksa bu kutu gizlenir.</li>
+    <li><b>Beğenirken hazır yorum da yaz</b>Açıksa beğeniyle birlikte Hazır Yorumlar'dan yorum yazılır; kapalıysa sadece beğeni yapılır.</li>
+    <li><b><span class="btn b-gray">Yorumları Düzenle</span></b>Hazır Yorumlar sayfasına götürür.</li>
+    <li><b>Ek seçenekler</b>Favoriye (yer imi) ekle, retweet yap, tweet sahibini takip et, tweette video varsa izle.</li>
+    <li><b>Beğeni / Yorum seçimi</b>Hangi tweetin beğenileceği ve yorum yazılacağı (örneğin <i>Son tweet</i>).</li>
+    <li><b>Hesapları rastgele sırayla işle</b>Kapalıysa hesaplar listedeki sırayla işlenir. Altındaki satır <i>Şu an: işlem yok</i> gibi anlık durumu söyler.</li>
+    <li><b>Hashtag Etkileşimi</b>Hashtag'i arar, çıkan tweetleri beğenir, paylaşan hesapları takip eder. Sıralama <i>Popüler</i> veya <i>En yeni</i>; beğeni, takip ve retweet adedi ayrı ayrı girilir.</li>
+    <li><b><span class="btn b-blue">Hashtag'i Başlat</span></b>Hashtag etkileşimini başlatır.</li>
+    <li><b>İşlem Günlüğü</b>Her adım hem burada hem CMD ekranında yazılır. <span class="btn b-gray">Genişlet</span> ile büyütebilirsiniz.</li>
+  </ol>
+  <div class="note tip"><div><b>Bekleme süreleri</b>İşlemler arasındaki ve yorumdan önceki bekleme, Sistem Ayarları'ndaki <b>Min / Max Bekleme Süresi</b> aralığından rastgele seçilir. Kalan süre sağ üstteki <b>Bekleme</b> göstergesinde geri sayar.</div></div>
+  <div class="note danger"><div><b>İşlem karışımı yok</b>Program sizin seçtiğiniz işlemleri yapar. Beğeni, yorum, takip ve retweet kutularını açık bıraktığınız her işlem uygulanır.</div></div>
+</section>
+
+<!-- 11 -->
+<section id="chrome">
+  <div class="sec-head"><div class="num">11</div><h2>Chrome İzleme</h2></div>
+  <p class="lead">Bir işlem başlayınca açılan Chrome'u burada canlı izleyin. Proxy ve profil bilgisi pencerenin kendisinden gelir.</p>
+  <figure>
+    <div class="frame" data-zoom>
+      <img src="resimler/11-chrome-izleme.jpg" alt="Chrome İzleme sayfası">
+      <i class="pin" style="--x:17.7;--y:13.8">1</i><i class="pin" style="--x:31.4;--y:13.8">2</i><i class="pin" style="--x:37.7;--y:13.8">3</i><i class="pin" style="--x:15.2;--y:20.9">4</i><i class="pin" style="--x:15.2;--y:76.3">5</i>
+    </div>
+    <figcaption>Şekil 11 – Chrome İzleme</figcaption>
+  </figure>
+  <ol class="legend">
+    <li><b>Hesap seçici</b>İzlemek istediğiniz açık Chrome'u seçin. Açık Chrome yoksa <i>(açık Chrome yok)</i> yazar.</li>
+    <li><b>Canlı yayın</b>Açıkken ekran görüntüsü kendiliğinden yenilenir.</li>
+    <li><b><span class="btn b-blue">Yenile</span></b>Görüntüyü elle yeniler.</li>
+    <li><b>Canlı görüntü</b>Chrome'un o anki ekranı. Üstte proxy, çıkış IP'si, Chrome profil klasörü ve cihaz bilgisi görünür.</li>
+    <li><b>Son olaylar / hatalar</b>İşlem adımları saatli olarak yazılır. Giriş, gezinme, hedef profil, takip ve hata mesajları buradadır.</li>
+  </ol>
+  <div class="note warn"><div><b>Giriş kontrolü</b>Canlı görüntüde sağ üstte <i>Giriş yap</i> düğmesi görüyorsanız hesap girişi başarısızdır; günlükte "Giriş yapıldı" yazsa bile ekrana güvenin.</div></div>
+</section>
+
+<!-- 12 -->
+<section id="zaman">
+  <div class="sec-head"><div class="num">12</div><h2>Otomatik Tweet (Zamanlama)</h2></div>
+  <p class="lead">Proje danışıp tweet seçip saat belirleyin; program açıkken o saatte tweet otomatik atılır.</p>
+  <figure>
+    <div class="frame" data-zoom>
+      <img src="resimler/12-otomatik-tweet.jpg" alt="Otomatik Tweet sayfası">
+      <i class="pin" style="--x:15.9;--y:19.3">1</i><i class="pin" style="--x:15.9;--y:26.4">2</i><i class="pin" style="--x:15.9;--y:33.5">3</i><i class="pin" style="--x:15.9;--y:40.7">4</i><i class="pin" style="--x:23.2;--y:43.3">5</i><i class="pin" style="--x:15.9;--y:51">6</i><i class="pin" style="--x:50.2;--y:17.7">7</i><i class="pin" style="--x:91.4;--y:17.1">8</i>
+    </div>
+    <figcaption>Şekil 12 – Otomatik Tweet (Zamanlama)</figcaption>
+  </figure>
+  <ol class="legend">
+    <li><b>Proje</b>Zamanlanacak tweetin projesi.</li>
+    <li><b>Tweet</b>Projedeki tweetlerden biri. Projede tweet yoksa <i>Bu projede tweet yok</i> yazar.</li>
+    <li><b>Hesap</b><i>Projedeki tüm hesaplar</i> veya tek bir hesap.</li>
+    <li><b>Tarih (GG.AA.YYYY)</b>Örnek: <code>03.11.2026</code></li>
+    <li><b>Saat (SS:DD)</b>Örnek: <code>00:50</code></li>
+    <li><b><span class="btn b-blue">Zamanlamaya Ekle</span></b>Kaydı sağdaki listeye ekler.</li>
+    <li><b>Zamanlanmış Tweetler</b>Her satırda tarih, proje, hesap, tweet metni ve durum bulunur: <b style="color:#60a5fa">Bekliyor</b> / <b style="color:#4ade80">Tamamlandı</b>. Bekleyen kayıtlarda <b>kalan süre geri sayım</b> olarak akar. Her satırın sonunda <span class="btn b-red">Sil</span> düğmesi vardır.</li>
+    <li><b><span class="btn b-gray">Bitenleri Temizle</span></b>Tamamlanan kayıtları listeden kaldırır.</li>
+  </ol>
+  <div class="note warn"><div><b>Program açık kalmalı</b>Zamanlanmış tweetler yalnızca program çalışırken atılır. Bilgisayarı kapatırsanız veya programı kapatırsanız saati gelen tweet atılmaz.</div></div>
+</section>
+
+<!-- 13 -->
+<section id="takipci">
+  <div class="sec-head"><div class="num">13</div><h2>Takipçi Takibi</h2></div>
+  <p class="lead">Seçili hesaplar, hedef hesapların takipçi listesine girip oradaki kişileri takip eder; ya da doğrudan tek bir hedef hesabı takip eder.</p>
+  <figure>
+    <div class="frame" data-zoom>
+      <img src="resimler/13-takipci-takibi.jpg" alt="Takipçi Takibi sayfası">
+      <i class="pin" style="--x:15.2;--y:17.7">1</i><i class="pin" style="--x:62.2;--y:23.6">2</i><i class="pin" style="--x:62.2;--y:35.6">3</i><i class="pin" style="--x:62.2;--y:39.5">4</i><i class="pin" style="--x:80.4;--y:39.5">5</i><i class="pin" style="--x:88.7;--y:39.5">6</i><i class="pin" style="--x:62.2;--y:53.5">7</i><i class="pin" style="--x:62.2;--y:57.4">8</i><i class="pin" style="--x:62.2;--y:72.8">9</i><i class="pin" style="--x:87.7;--y:72.8">10</i>
+    </div>
+    <figcaption>Şekil 13 – Takipçi Takibi</figcaption>
+  </figure>
+  <ol class="legend">
+    <li><b>Hesapları Seçin</b>Takibi yapacak hesaplar.</li>
+    <li><b>Hedef hesaplar</b>Her satıra bir hesap veya virgülle ayırarak yazın.</li>
+    <li><b>Seçim</b><i>Rastgele hesap</i> ya da <i>Tek hesap</i> (yanındaki listeden belirlenir).</li>
+    <li><b>Hesap başına takip adedi</b>Her hesabın kaç kişi takip edeceği (örnek: 5).</li>
+    <li><b><span class="btn b-gray">İşlem Günlüğüne Git</span></b>Canlı günlüğü açar.</li>
+    <li><b><span class="btn b-blue">Takipçileri Takip Et</span></b>Hedeflerin takipçilerini takip etmeye başlar.</li>
+    <li><b>Hedef Hesabı Takip Et</b>Tek bir hedef hesap adı yazın.</li>
+    <li><b>İşaretli seçenekler</b>Son tweetlerini beğen, beğenirken hazır yorum yaz, favorilere (yer imi) ekle, retweet yap, videoyu izle.</li>
+    <li><b>Son kaç tweet</b>Hedefin kaç tweetine işlem yapılacağı.</li>
+    <li><b><span class="btn b-blue">Hedef Hesabı Takip Et</span></b>Takibi ve işaretli işlemleri başlatır.</li>
+  </ol>
+</section>
+
+<!-- 14 -->
+<section id="ayarlar">
+  <div class="sec-head"><div class="num">14</div><h2>Sistem Ayarları</h2></div>
+  <p class="lead">Bekleme süreleri, Chrome yolu, mobil cihaz taklidi, profil ısındırma ve ban koruması ayarları.</p>
+  <h3>Hız, Chrome ve cihaz</h3>
+  <figure>
+    <div class="frame" data-zoom>
+      <img src="resimler/14-sistem-ayarlari-1.jpg" alt="Sistem Ayarları ilk bölüm">
+      <i class="pin" style="--x:15.4;--y:16.5">1</i><i class="pin" style="--x:15.4;--y:24">2</i><i class="pin" style="--x:15.4;--y:32.4">3</i><i class="pin" style="--x:15.4;--y:40.9">4</i><i class="pin" style="--x:15.4;--y:45.6">5</i><i class="pin" style="--x:15.4;--y:48.9">6</i><i class="pin" style="--x:16.8;--y:52.1">7</i><i class="pin" style="--x:15.4;--y:66.4">8</i><i class="pin" style="--x:15.4;--y:70.9">9</i><i class="pin" style="--x:15.4;--y:74.3">10</i><i class="pin" style="--x:15.4;--y:82.5">11</i>
+    </div>
+    <figcaption>Şekil 14 – Sistem Ayarları (üst bölüm)</figcaption>
+  </figure>
+  <ol class="legend">
+    <li><b>Min Bekleme Süresi (sn)</b>İşlemler arası en kısa bekleme.</li>
+    <li><b>Max Bekleme Süresi (sn)</b>En uzun bekleme. Program her seferinde Min ile Max arasında rastgele bir süre bekler; yorumdan önceki bekleme de bu aralığa uyar.</li>
+    <li><b>Klavye Yazma Hızı</b>Yorum ve tweet yazarken tuş hızı (örnek: Hızlı).</li>
+    <li><b>Chrome Exe Tam Yolu</b>Örnek: <code>C:\Program Files\Google\Chrome\Application\chrome.exe</code>. <span class="btn b-blue">Gözat</span> ile seçilir.</li>
+    <li><b>Tüm işlemleri proxy ile yap</b>Proxy Havuzu'ndaki proxy'leri kullanır; işlemler sayfasındaki Proxy kutusu gizlenir.</li>
+    <li><b>Mobil telefon olarak işlem yap</b>Gerçek telefon gibi User-Agent, Referer, ekran, dokunmatik, 5G ağ ve GPS konumu kullanır.</li>
+    <li><b>Telefon türü ve alt seçenekler</b><i>Android telefon</i> veya iPhone; <i>5G mobil veri gibi göster</i> ve <i>GPS konumunu proxy IP'sinin şehrine göre ver</i> (saat dilimi de uyar).</li>
+    <li><b>Beğeni/Yorum Hızı</b><i>Güvenli</i> en yavaş ve en güvenli seçenektir.</li>
+    <li><b>Profil ısındırma</b>Çerez ve geçmiş biriktirerek hesabı gerçek kullanıcı gibi gösterir.</li>
+    <li><b>Chrome'u ekran dışında çalıştır</b>Pencere diğer pencerelerin üstüne çıkmaz.</li>
+    <li><b>ChromeDriver Exe Tam Yolu</b>Boşsa program klasöründeki dosya veya otomatik indirilen kullanılır.</li>
+  </ol>
+
+  <h3>Isınma siteleri ve ban koruması</h3>
+  <figure>
+    <div class="frame" data-zoom>
+      <img src="resimler/15-sistem-ayarlari-2.jpg" alt="Sistem Ayarları ikinci bölüm">
+      <i class="pin" style="--x:15.4;--y:41.9">1</i><i class="pin" style="--x:39.4;--y:41.9">2</i><i class="pin" style="--x:15.4;--y:70.7">3</i><i class="pin" style="--x:15.4;--y:79.4">4</i>
+    </div>
+    <figcaption>Şekil 15 – Sistem Ayarları (alt bölüm)</figcaption>
+  </figure>
+  <ol class="legend">
+    <li><b>Isınma Siteleri</b>Profil ısıtılırken gezilecek siteler; her satırda bir adres (Google, YouTube, Vikipedi, Hürriyet, Sözcü, Trendyol, Hepsiburada, Ekşi Sözlük, NTV gibi).</li>
+    <li><b><span class="btn b-red">Sil</span></b>Satırdaki siteyi listeden çıkarır.</li>
+    <li><b><span class="btn b-blue">+ Site Ekle</span></b>Yeni boş satır ekler.</li>
+    <li><b>İnsan Gibi Davranış (ban koruması)</b>Hesap başına sabit tarayıcı kimliği, saat dilimi ve dili proxy konumuna uydurma, yeni/uzun süredir kullanılmayan hesaplarda kademeli hız, gerçekçi gezinme (kaydırma, okuma duraklaması, fare hareketi).</li>
+  </ol>
+  <div class="note warn"><div><b>Mümkünse varsayılanları koruyun</b>Min/Max bekleme değerlerini çok düşürmek ve koruma kutularını kapatmak hesapların kısıtlanma ihtimalini artırır.</div></div>
+</section>
+
+<!-- 15 -->
+<section id="hizli">
+  <div class="sec-head"><div class="num">15</div><h2>Hızlı Başlangıç</h2></div>
+  <p class="lead">Sıfırdan ilk işleminize kadar izlenecek 10 adım.</p>
+  <ol class="steps">
+    <li><b>Chrome ve lisansı kontrol edin.</b> Sistem Ayarları'nda Chrome yolunun doğru olduğunu görün.</li>
+    <li><b>Proxy ekleyin.</b> <i>Proxy Havuzu</i> sayfasında proxy'leri ekleyip <span class="btn b-purple">Proxy Test</span> ile doğrulayın.</li>
+    <li><b>Hesapları ekleyin.</b> <i>Hesap Yönetimi</i> sayfasında hesapları yapıştırıp <span class="btn b-blue">Süz &amp; Ekle</span> deyin.</li>
+    <li><b>Giriş testi yapın.</b> <span class="btn b-blue">Seçili Hesapla Tarayıcı Aç</span> ile hesabın giriş yaptığından emin olun.</li>
+    <li><b>Profili hazırlayın (isteğe bağlı).</b> <i>Profil Düzenleme</i> ile isim, biyografi ve resimleri güncelleyin.</li>
+    <li><b>Proje oluşturun.</b> <i>Proje &amp; Etiketler</i> sayfasında hesapları bir projeye bağlayın.</li>
+    <li><b>Tweet ve yorum hazırlayın.</b> <i>Tweet Havuzu</i> ve <i>Hazır Yorumlar</i> sayfalarını doldurun.</li>
+    <li><b>Bekleme sürelerini ayarlayın.</b> <i>Sistem Ayarları</i>'nda Min/Max süreleri girin.</li>
+    <li><b>İşlemi başlatın.</b> <i>İşlemler &amp; Otomasyon</i> sayfasında hesapları seçip istediğiniz düğmeye basın.</li>
+    <li><b>Canlı izleyin.</b> <i>Genel Bakış</i>, <i>Chrome İzleme</i> ve İşlem Günlüğü'nden akışı takip edin; gerekirse <span class="btn b-orange">Duraklat</span> veya <span class="btn b-red">Durdur</span> deyin.</li>
+  </ol>
+</section>
+
+<!-- 16 -->
+<section id="guvenli">
+  <div class="sec-head"><div class="num">16</div><h2>Güvenli Kullanım Önerileri</h2></div>
+  <p class="lead">Hesapları uzun süre sağlıklı tutmak için pratik kurallar.</p>
+  <table>
+    <thead><tr><th>Konu</th><th>Öneri</th></tr></thead>
+    <tbody>
+      <tr><td><b>Proxy</b></td><td>Her hesaba mümkünse ayrı, kaliteli bir proxy kullanın ve önce test edin.</td></tr>
+      <tr><td><b>Yeni hesaplar</b></td><td>İlk günlerde az işlem yapın, hızı kademeli artırın. Program yeni hesaplarda zaten kademeli hız uygular.</td></tr>
+      <tr><td><b>Bekleme</b></td><td>Min/Max aralığını geniş tutun (örnek 30–60 sn). Çok kısa aralık spam gibi görünür.</td></tr>
+      <tr><td><b>Isınma</b></td><td>Profil ısındırmayı açık bırakın; hesap gerçek kullanıcı gibi çerez ve geçmiş biriktirir.</td></tr>
+      <tr><td><b>Cihaz</b></td><td>Hesap telefonla açıldıysa mobil modu açık tutun; cihaz kimliği her hesapta sabit kalır.</td></tr>
+      <tr><td><b>Günlük sınır</b></td><td>Hesap başına günlük beğeni ve yorum sınırı vardır; sayaç günlükte <i>bugün 2/15</i> gibi görünür.</td></tr>
+      <tr><td><b>Askı</b></td><td>Askıya düşen hesabı hemen işaretleyin ki otomasyona alınmasın.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 17 -->
+<section id="sss">
+  <div class="sec-head"><div class="num">17</div><h2>Sık Sorulanlar &amp; Sorun Giderme</h2></div>
+  <details><summary>Günlükte "Giriş yapıldı" yazıyor ama tarayıcıda "Giriş yap" görünüyor</summary><p>Token (çerez) geçersiz olmuş veya hesap kapanmış olabilir. Chrome İzleme'den ekrana bakın, hesabı tarayıcıda açıp kontrol edin ve gerekirse yeni token ile yeniden ekleyin.</p></details>
+  <details><summary>Beğeni yapılıyor ama yorum yazılmıyor</summary><p>İşlemler &amp; Otomasyon sayfasında <b>Beğenirken hazır yorum da yaz</b> kutusunun açık olduğunu ve Hazır Yorumlar havuzunda bulunduğunu kontrol edin. Yorum için seçilen tweet (örneğin <i>Son tweet</i>) de uygun olmalıdır.</p></details>
+  <details><summary>Bekleme çok uzun / çok kısa</summary><p>Sistem Ayarları'ndaki Min ve Max Bekleme Süresi'ni değiştirin. Süre her seferinde bu aralıktan rastgele seçilir. Kalan süre sağ üstte <b>Bekleme</b> göstergesinden izlenir.</p></details>
+  <details><summary>Zamanlanmış tweet atılmadı</summary><p>Program o saatte açık olmalıdır. Listede durum <b>Bekliyor</b> kalmışsa saati ve tarihi kontrol edin; geri sayım sıfırlandığında tweet atılır.</p></details>
+  <details><summary>Chrome açılmıyor</summary><p>Sistem Ayarları'nda <i>Chrome Exe Tam Yolu</i> ve <i>ChromeDriver</i> yolunu kontrol edin. Chrome güncellendiyse eski ChromeDriver uyumsuz olabilir; alanı boş bırakıp otomatik indirmeyi deneyin.</p></details>
+  <details><summary>Hesap askıya alınmış görünüyor</summary><p>Hesap Yönetimi'nde <span class="btn b-orange">Askı Kontrolü</span> ile doğrulayın, ardından <span class="btn b-red">Askıya Alındı İşaretle</span> ile işaretleyin.</p></details>
+  <details><summary>İşlemi nasıl güvenli durdururum?</summary><p>Geçici bekletmek için <span class="btn b-orange">Duraklat</span>. Tamamen bitirmek ve açık Chrome'ları kapatmak için <span class="btn b-red">Durdur (Chrome'ları Kapat)</span>.</p></details>
+  <details><summary>Türkçe karakterler bozuk görünüyorsa</summary><p>Bu durumda programı en güncel sürümle çalıştırın. Hâlâ sorun varsa ekran görüntüsüyle destek isteyin.</p></details>
+  <footer>TWPANEL Kullanım Kılavuzu &middot; Bu belge programla birlikte <code>kullanim_klavuzu</code> klasöründe tutulur. <a href="#top-of-page" onclick="window.scrollTo({top:0});return false">Başa dön ↑</a></footer>
+</section>
+</main>
+</div>
+
+<div id="lightbox"><img alt=""></div>
+<button id="top" aria-label="Yukarı çık">↑</button>
+
+<script>
+(function(){
+  var bar=document.getElementById('progress'),topBtn=document.getElementById('top');
+  var links=[].slice.call(document.querySelectorAll('.toc a'));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'))});
+  function onScroll(){
+    var h=document.documentElement,max=h.scrollHeight-h.clientHeight;
+    bar.style.width=(max>0?h.scrollTop/max*100:0)+'%';
+    topBtn.classList.toggle('show',h.scrollTop>600);
+    var cur=0;
+    secs.forEach(function(s,i){if(s&&s.getBoundingClientRect().top<=140)cur=i});
+    links.forEach(function(a,i){a.classList.toggle('on',i===cur)});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+  topBtn.onclick=function(){window.scrollTo({top:0})};
+  var lb=document.getElementById('lightbox'),lbi=lb.querySelector('img');
+  document.querySelectorAll('[data-zoom]').forEach(function(f){
+    f.addEventListener('click',function(){var i=f.querySelector('img');lbi.src=i.src;lbi.alt=i.alt;lb.classList.add('open')});
+  });
+  lb.onclick=function(){lb.classList.remove('open')};
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')lb.classList.remove('open')});
+  var toc=document.getElementById('toc');
+  document.getElementById('menu').onclick=function(){toc.classList.toggle('open')};
+  links.forEach(function(a){a.addEventListener('click',function(){toc.classList.remove('open')})});
+})();
+</script>
+</body>
+</html>
