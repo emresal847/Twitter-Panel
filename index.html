@@ -34,23 +34,6 @@ kbd{box-shadow:0 2px 0 var(--line)}
 .toc a i{font-style:normal;width:22px;height:22px;border-radius:7px;background:rgba(255,255,255,.08);display:grid;place-items:center;font-size:11px;flex:none}
 .toc a.on i{background:rgba(255,255,255,.22)}
 
-/* Sol menü dikkat çekici indirme düğmesi özel tasarımı */
-.toc a.download-btn-toc {
-  background: linear-gradient(135deg, #22c07a, #0c7abf);
-  color: #fff !important;
-  margin-top: 14px;
-  box-shadow: 0 4px 14px rgba(34, 192, 122, 0.35);
-  animation: pulse-toc 2s infinite;
-}
-.toc a.download-btn-toc:hover {
-  background: linear-gradient(135deg, #1fa96a, #0a69a6);
-}
-@keyframes pulse-toc {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.02); }
-  100% { transform: scale(1); }
-}
-
 main{flex:1;min-width:0;padding:0 clamp(18px,4vw,56px) 80px}
 
 .hero{margin:0 -56px 46px;padding:70px 56px 56px;background:radial-gradient(900px 400px at 85% -10%,rgba(29,155,240,.35),transparent 60%),radial-gradient(600px 300px at 0% 100%,rgba(34,192,122,.18),transparent 60%),linear-gradient(180deg,#0f2a4a,var(--bg));border-bottom:1px solid var(--line)}
@@ -62,31 +45,22 @@ main{flex:1;min-width:0;padding:0 clamp(18px,4vw,56px) 80px}
 .stat{padding:14px 22px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid var(--line)}
 .stat b{display:block;font-size:26px;line-height:1.1}
 .stat span{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
-
-.hero-cta-wrapper {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  align-items: center;
-  margin-top: 30px;
-}
-.cta{display:inline-flex;padding:13px 26px;border-radius:12px;background:var(--blue);color:#fff;font-weight:700;box-shadow:0 8px 24px rgba(29,155,240,.35)}
+.cta{display:inline-flex;margin-top:30px;padding:13px 26px;border-radius:12px;background:var(--blue);color:#fff;font-weight:700;box-shadow:0 8px 24px rgba(29,155,240,.35)}
 .cta:hover{background:#2aa6fa;text-decoration:none}
-
-/* Üst kısım dikkat çekici indirme düğmesi özel tasarımı */
-.cta-download {
-  background: linear-gradient(135deg, #22c07a, #1d9bf0);
-  box-shadow: 0 8px 24px rgba(34, 192, 122, 0.4);
-  animation: pulse-hero 2s infinite;
-}
-.cta-download:hover {
-  background: linear-gradient(135deg, #1fa96a, #1588d0);
-}
-@keyframes pulse-hero {
-  0% { box-shadow: 0 0 0 0 rgba(34, 192, 122, 0.4); }
-  70% { box-shadow: 0 0 0 12px rgba(34, 192, 122, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(34, 192, 122, 0); }
-}
+.cta.alt{background:var(--green);box-shadow:0 8px 24px rgba(34,192,122,.3);margin-left:10px}
+.cta.alt:hover{background:#2bd48a}
+.toc a.dl{background:var(--green);color:#052b1a;margin-bottom:10px}
+.toc a.dl:hover{background:#2bd48a;color:#052b1a}
+.toc a.dl i{background:rgba(5,43,26,.18)}
+.toc a.dl.on{background:var(--green);color:#052b1a;outline:2px solid #8cf0c0}
+.download{display:flex;flex-wrap:wrap;align-items:center;gap:22px;padding:26px 28px;border-radius:18px;background:linear-gradient(135deg,rgba(34,192,122,.16),rgba(29,155,240,.14));border:1px solid rgba(34,192,122,.45)}
+.download .ic{width:64px;height:64px;border-radius:18px;background:var(--green);color:#052b1a;display:grid;place-items:center;font-size:32px;font-weight:800;flex:none}
+.download .txt{flex:1;min-width:240px}
+.download .txt b{display:block;font-size:20px;color:#fff}
+.download .txt span{color:#b8c7de;font-size:14.5px}
+.download .url{display:block;margin-top:8px;word-break:break-all}
+.dlbtn{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border-radius:12px;background:var(--green);color:#052b1a;font-weight:800;font-size:16px;box-shadow:0 8px 24px rgba(34,192,122,.35)}
+.dlbtn:hover{background:#2bd48a;text-decoration:none}
 
 section{margin:0 0 70px;scroll-margin-top:24px}
 .sec-head{display:flex;align-items:center;gap:16px;margin-bottom:8px}
@@ -190,8 +164,7 @@ footer{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);color:v
 <div class="layout">
 <nav class="toc" id="toc" aria-label="İçindekiler">
   <div class="brand"><div class="logo">TW</div><div><b>TWPANEL</b><span>Kullanım Kılavuzu</span></div></div>
-  <!-- Sol menüye eklenen dikkat çekici indirme bağlantısı -->
-  <a class="download-btn-toc" href="https://cemilreklam.site/Twitter.zip" target="_blank"><i>↓</i><b>Programı İndir</b></a>
+  <a class="dl" href="#indir"><i>↓</i>Programı İndir (Demo)</a>
   <a href="#baslangic"><i>0</i>Başlamadan Önce</a>
   <a href="#arayuz"><i>1</i>Arayüze Genel Bakış</a>
   <h4>Hazırlık</h4>
@@ -207,13 +180,14 @@ footer{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);color:v
   <h4>Otomasyon</h4>
   <a href="#otomasyon"><i>10</i>İşlemler &amp; Otomasyon</a>
   <a href="#chrome"><i>11</i>Chrome İzleme</a>
-  <a href="#zaman"><i>12</i>Otomatik Tweet</a>
-  <a href="#takipci"><i>13</i>Takipçi Takibi</a>
+  <a href="#kelimetweet"><i>12</i>Kelime &amp; Resim Tweet</a>
+  <a href="#zaman"><i>13</i>Otomatik Tweet</a>
+  <a href="#takipci"><i>14</i>Takipçi Takibi</a>
   <h4>Sistem</h4>
-  <a href="#ayarlar"><i>14</i>Sistem Ayarları</a>
-  <a href="#hizli"><i>15</i>Hızlı Başlangıç</a>
-  <a href="#guvenli"><i>16</i>Güvenli Kullanım</a>
-  <a href="#sss"><i>17</i>Sorun Giderme</a>
+  <a href="#ayarlar"><i>15</i>Sistem Ayarları</a>
+  <a href="#hizli"><i>16</i>Hızlı Başlangıç</a>
+  <a href="#guvenli"><i>17</i>Güvenli Kullanım</a>
+  <a href="#sss"><i>18</i>Sorun Giderme</a>
 </nav>
 
 <main>
@@ -223,14 +197,29 @@ footer{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);color:v
   <p>Hesap ekleme, proxy, profil düzenleme, beğeni, yorum, zamanlanmış tweet ve takip işlemlerini tek ekrandan yönetmek için hazırlanmış, ekran görüntülü ve numaralı anlatım.</p>
   <div class="stats">
     <div class="stat"><b>14</b><span>Menü sayfası</span></div>
-    <div class="stat"><b>15</b><span>Ekran görüntüsü</span></div>
+    <div class="stat"><b>20</b><span>Ekran görüntüsü</span></div>
     <div class="stat"><b>10</b><span>Adımda başlangıç</span></div>
   </div>
-  <div class="hero-cta-wrapper">
-    <a class="cta cta-download" href="https://cemilreklam.site/Twitter.zip" target="_blank">📥 Programı Hemen İndir (.zip)</a>
-    <a class="cta" href="#hizli">Hızlı başlangıca git →</a>
-  </div>
+  <a class="cta" href="#hizli">Hızlı başlangıca git →</a><a class="cta alt" href="https://emresal847.github.io/Twitter-Panel/Twitter.zip" download>↓ Demo sürümü indir</a>
 </header>
+
+<!-- İndir -->
+<section id="indir">
+  <div class="sec-head"><div class="num" style="background:linear-gradient(135deg,var(--green),#17935c)">↓</div><h2>Programı İndir (Demo)</h2></div>
+  <p class="lead">TWPANEL demo sürümünü aşağıdaki adresten indirebilirsiniz.</p>
+  <div class="download">
+    <div class="ic">ZIP</div>
+    <div class="txt"><b>Twitter.zip &middot; Demo sürümü</b><span>İndirme adresi:</span>
+      <a class="url" href="https://emresal847.github.io/Twitter-Panel/Twitter.zip" download>https://emresal847.github.io/Twitter-Panel/Twitter.zip</a></div>
+    <a class="dlbtn" href="https://emresal847.github.io/Twitter-Panel/Twitter.zip" download>↓ Şimdi İndir</a>
+  </div>
+  <ol class="steps">
+    <li><b>ZIP dosyasını indirin.</b> Yukarıdaki düğmeye veya adrese tıklayın.</li>
+    <li><b>Klasöre çıkarın.</b> ZIP'e sağ tıklayıp <i>Tümünü ayıkla</i> deyin. Programı ZIP'in içinden çalıştırmayın; tüm klasörü birlikte tutun, taşırsanız da bütünüyle taşıyın.</li>
+    <li><b>Programı açın.</b> Klasördeki programı çalıştırın ve <a href="#baslangic">Başlamadan Önce</a> bölümündeki hazırlıkları tamamlayın.</li>
+  </ol>
+  <div class="note info"><div><b>Demo sürümü</b>Bu adres programın demo sürümü içindir. Lisans bilgisi ve kalan gün sayısı programın içinde görünür.</div></div>
+</section>
 
 <!-- 0 -->
 <section id="baslangic">
@@ -254,6 +243,15 @@ footer{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);color:v
     <div class="card"><div class="ic" style="background:var(--green)">☰</div><h5>Sol menü</h5><p>Tüm sayfalar buradadır. Seçili sayfa mavi yanar. Menünün altındaki <b>Görünüm Teması</b> kutusundan Dark / Light tema seçebilirsiniz.</p></div>
     <div class="card"><div class="ic" style="background:var(--orange)">■</div><h5>Alt kontrol çubuğu</h5><p><span class="btn b-orange">Duraklat</span> çalışan işlemi bekletir, <span class="btn b-red">Durdur (Chrome'ları Kapat)</span> işlemi bitirip açık Chrome pencerelerini kapatır.</p></div>
   </div>
+  <h3>Arka planda çalışma (System Tray)</h3>
+  <p>Pencereyi aşağı indirdiğinizde (küçült düğmesi <b>–</b>) program görev çubuğundan kalkar ve Windows'ta saatin yanındaki bildirim alanına (<b>System Tray</b>) iner. Orada mavi <b>TW</b> simgesi görünür; simgenin üzerine gelince <i>TWPANEL - Arka planda çalışıyor</i> yazar.</p>
+  <ul>
+    <li><b>İşlemler durmaz:</b> Çalışan otomasyon, <a href="#zaman">zamanlanmış tweetler</a> ve <a href="#kelimetweet">Kelime &amp; Resim Tweet</a> arka planda çalışmaya devam eder.</li>
+    <li><b>Geri açmak için:</b> Simgeye çift tıklayın ya da sağ tıklayıp <i>Göster</i> deyin.</li>
+    <li><b>Tamamen kapatmak için:</b> Simgeye sağ tıklayıp <i>Çıkış</i> deyin.</li>
+  </ul>
+  <div class="note info"><div><b>Simge görünmüyorsa</b>Windows simgeyi saatin yanındaki <b>^</b> (gizli simgeler) okunun içine koymuş olabilir. Oka tıklayıp TW simgesini bulun; isterseniz sürükleyip görev çubuğuna sabitleyebilirsiniz.</div></div>
+  <div class="note warn"><div><b>Kapat (X) düğmesi farklıdır</b>Pencerenin sağ üstündeki <b>X</b> programı tamamen kapatır. Çalışan bir işlem varsa önce onay sorar; onaylarsanız işlem durur ve zamanlanmış tweetler atılmaz. Arka planda çalışsın istiyorsanız X yerine küçült (<b>–</b>) düğmesini kullanın.</div></div>
   <div class="note tip"><div><b>Kullanım sırası</b>Kolay hatırlamak için menüyü yukarıdan aşağıya takip edin: önce hesap ve proxy, sonra proje ve içerik, en son otomasyon.</div></div>
 </section>
 
@@ -405,7 +403,7 @@ footer{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);color:v
   <ol class="legend">
     <li><b>Tweet Metni</b>Paylaşılacak yazı.</li>
     <li><b>Bağlı Olduğu Proje</b>Tweetin hangi projede kullanılacağı.</li>
-    <li><b><span class="btn b-purple">Efektli Yazı Resmi</span></b>Yazıdan süslü bir görsel üretip tweete ekler.</li>
+    <li><b><span class="btn b-purple">Efektli Yazı Resmi</span></b>Yazıdan süslü (glow, gölge, kenarlıklı) bir görsel üretip tweete ekler. Ayrıntılar için <a href="#efektli">Efektli Yazı Resmi Oluşturucu</a> bölümüne bakın.</li>
     <li><b><span class="btn b-red">Temizle</span></b>Seçili medyayı kaldırır.</li>
     <li><b><span class="btn b-blue">Çoklu Medya Seç</span></b>En fazla 4 resim veya 1 video seçin.</li>
     <li><b><span class="btn b-blue">Havuza Kaydet</span></b>Tweeti havuza ekler.</li>
@@ -507,9 +505,138 @@ footer{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);color:v
 </section>
 
 <!-- 12 -->
+<section id="kelimetweet">
+  <div class="sec-head"><div class="num">12</div><h2>Kelime &amp; Resim Tweet</h2></div>
+  <p class="lead">Kelime listenizden ve resim / video / GIF klasörünüzden her hesap için ayrı bir kelime ve ayrı bir medya seçip tweet atar. İsterseniz resme yazı ve gölge (filigram) ekler, şablon uygular, günlük limit ve saat aralığı koyar.</p>
+  <figure>
+    <div class="frame" data-zoom>
+      <img src="resimler/16-kelime-resim-tweet.jpg" alt="Kelime ve Resim Tweet sayfası">
+      <i class="pin" style="--x:17;--y:20.9">1</i><i class="pin" style="--x:59.6;--y:19.7">2</i><i class="pin" style="--x:91.6;--y:19.7">3</i><i class="pin" style="--x:95.8;--y:19.7">4</i><i class="pin" style="--x:59.9;--y:26">5</i><i class="pin" style="--x:59.9;--y:32">6</i><i class="pin" style="--x:63.2;--y:39.6">7</i><i class="pin" style="--x:78.4;--y:46">8</i><i class="pin" style="--x:78.4;--y:67.1">9</i><i class="pin" style="--x:61.7;--y:85.6">10</i><i class="pin" style="--x:68.8;--y:85.6">11</i><i class="pin" style="--x:76.6;--y:85.6">12</i>
+    </div>
+    <figcaption>Şekil 16 – Kelime &amp; Resim Tweet (Kelime Ekle sekmesi)</figcaption>
+  </figure>
+  <ol class="legend">
+    <li><b>Tweet Atacak Hesaplar</b>Hesapları işaretleyin. <i>Tümünü Seç / Kaldır</i> hepsini tek tıkla seçer; sağdaki sayaç hesap sayısını verir. Hesap yoksa <i>Kayıtlı hesap bulunamadı</i> yazar.</li>
+    <li><b>Resim / Video / GIF Klasör Yolu</b>Medyaların bulunduğu klasörü yazın (örnek: <code>C:\Resimler</code>). Altta kaç dosya bulunduğu görünür (örnek: <i>1 dosya bulundu</i>).</li>
+    <li><b><span class="btn b-blue">Göz At</span></b>Klasörü pencereden seçtirir.</li>
+    <li><b><span class="btn b-gray">Yenile</span></b>Klasöre sonradan eklediğiniz dosyaları listeye alır.</li>
+    <li><b>Tweete klasörden rastgele resim / video / GIF ekle</b>Açıksa her tweete klasörden bir medya eklenir. Kapalıysa yalnızca yazı atılır. <b>Kelimeyi rastgele seç</b> kapalıysa kelimeler listedeki sırayla kullanılır.</li>
+    <li><b>Hesapları rastgele sırayla işle</b>Kapalıysa hesaplar listedeki sırayla işlenir.</li>
+    <li><b><span class="btn b-green">Tweet At</span></b>İşlemi başlatır. Seçili her hesap için ayrı kelime ve ayrı medya kullanılır. Yanındaki gri satır, <a href="#ayarlar">Sistem Ayarları</a>'ndan gelen hesaplar arası bekleme, yazma hızı, proxy ve mobil giriş değerlerini gösterir; bunlar burada değil Sistem Ayarları'nda değişir.</li>
+    <li><b>Sekmeler</b><i>Kelime Ekle, Kelimeler, Resimler, Filigram, Şablon, Limit &amp; Saat, Geçmiş, Günlük</i> (aşağıdaki tabloya bakın).</li>
+    <li><b>Kelime kutusu</b>Kelimeleri alt alta yazın veya yapıştırın; her satır bir kelime (veya kısa cümle) olur.</li>
+    <li><b><span class="btn b-blue">Listeye Ekle</span></b>Kutudaki satırları kelime listesine ekler. Boş satırlar atlanır.</li>
+    <li><b><span class="btn b-orange">Kullanılanları Temizle</span></b>Kullanıldı işaretini siler; kelimeler listede kalır ve tekrar atılabilir.</li>
+    <li><b><span class="btn b-red">Tüm Kelimeleri Sil</span></b>Listedeki bütün kelimeleri siler (onay sorar).</li>
+  </ol>
+
+  <h3>Sekmeler</h3>
+  <table>
+    <thead><tr><th>Sekme</th><th>Ne işe yarar?</th></tr></thead>
+    <tbody>
+      <tr><td><b>Kelime Ekle</b></td><td>Yeni kelimeleri toplu olarak ekler.</td></tr>
+      <tr><td><b>Kelimeler</b></td><td>Listeyi gösterir: <i>Toplam X kelime · Y bekliyor · Z kullanıldı</i>. <span class="btn b-gray">Kullanılan Kelimeleri Listeden Sil</span> kullanılanları listeden tamamen kaldırır.</td></tr>
+      <tr><td><b>Resimler</b></td><td>Klasörde bulunan resim, GIF ve videoların listesi.</td></tr>
+      <tr><td><b>Filigram</b></td><td>Resme yazı ve alt gölge ekler; önizleme gösterir.</td></tr>
+      <tr><td><b>Şablon</b></td><td>Tweet metnini şablondan üretir.</td></tr>
+      <tr><td><b>Limit &amp; Saat</b></td><td>Günlük tweet limiti ve çalışma saat aralığı.</td></tr>
+      <tr><td><b>Geçmiş</b></td><td>Atılan tweetlerin kaydı ve CSV dışa aktarma.</td></tr>
+      <tr><td><b>Günlük</b></td><td>Bu sayfadaki işlemin canlı günlüğü; aynı satırlar CMD ekranına da yazılır.</td></tr>
+    </tbody>
+  </table>
+  <div class="note info"><div><b>Kelime tekrarı olmaz</b>Atılan her kelime <i>kullanıldı</i> olarak işaretlenir ve tekrar seçilmez. Kullanılmamış kelime kalmadıysa yeni kelime ekleyin veya <i>Kullanılanları Temizle</i> deyin.</div></div>
+
+  <h3 id="filigram">Filigram: resme yazı + alt gölge</h3>
+  <p>Tweet atılırken medyanın üzerine yazı eklenir ve resmin altına siyah gölge verilir. Ayar <b>Filigram</b> sekmesindedir.</p>
+  <figure>
+    <div class="frame" data-zoom>
+      <img src="resimler/17-filigram-ayari.jpg" alt="Filigram sekmesi">
+      <i class="pin" style="--x:59.7;--y:49.6">1</i><i class="pin" style="--x:59.8;--y:55.9">2</i><i class="pin" style="--x:74.6;--y:58.8">3</i><i class="pin" style="--x:59.9;--y:65.1">4</i><i class="pin" style="--x:77.3;--y:65.1">5</i><i class="pin" style="--x:73;--y:71">6</i><i class="pin" style="--x:83.7;--y:76.3">7</i><i class="pin" style="--x:62.5;--y:79.3">8</i><i class="pin" style="--x:75.7;--y:79.3">9</i><i class="pin" style="--x:59.7;--y:82.4">10</i><i class="pin" style="--x:59.1;--y:86.1">11</i>
+    </div>
+    <figcaption>Şekil 17 – Filigram sekmesi</figcaption>
+  </figure>
+  <ol class="legend">
+    <li><b>Resimlere yazı + alt gölge ekle</b>Özelliği açar. Kapalıysa resimler olduğu gibi atılır.</li>
+    <li><b>Resmin üzerine yazılacak metin</b>Örnek: marka adı veya <code>@hesapadi</code>.</li>
+    <li><b>Metin yerine tweette atılan kelimeyi resme yaz</b>Açıksa resme, o tweette kullanılan kelime yazılır.</li>
+    <li><b>Yazı rengi</b>Hazır renk paletinden seçin.</li>
+    <li><b><span class="btn b-gray">Özel Renk</span></b>Palette olmayan bir renk seçtirir; seçilen kod yanda (örnek: <code>#FFFFFF</code>) görünür.</li>
+    <li><b>Yazı boyutu</b>Resim genişliğinin yüzdesi olarak ayarlanır (örnek: %7).</li>
+    <li><b>Siyah gölge yoğunluğu</b>Resmin altındaki karartma miktarı (örnek: %65). Yazının okunmasını kolaylaştırır.</li>
+    <li><b>Konum</b>Yazının resimdeki yeri (örnek: <i>Alt</i>).</li>
+    <li><b>Resim boyutu</b>Çıkan resmin boyutu (örnek: <i>Orijinal</i>).</li>
+    <li><b>Yazıya gölge ekle</b>Yazının kendisine de gölge verir.</li>
+    <li><b>Önizleme</b>Paylaşmadan önce resmin nasıl görüneceğini gösterir. Alt kısma inmek için sekmeyi kaydırın.</li>
+  </ol>
+  <figure>
+    <div class="frame" data-zoom>
+      <img src="resimler/20-filigram-onizleme.jpg" alt="Filigram büyük önizleme penceresi">
+      <i class="pin" style="--x:78.3;--y:67.8">1</i><i class="pin" style="--x:63;--y:87.7">2</i><i class="pin" style="--x:70;--y:87.7">3</i><i class="pin" style="--x:28.8;--y:54.3">4</i><i class="pin" style="--x:29;--y:82.6">5</i>
+    </div>
+    <figcaption>Şekil 18 – Filigram önizleme ve büyük önizleme penceresi</figcaption>
+  </figure>
+  <ol class="legend">
+    <li><b>Önizleme alanı</b>Klasördeki bir resimle sonucu küçük olarak gösterir; altında hangi dosyanın kullanıldığı yazar.</li>
+    <li><b><span class="btn b-blue">Başka Resim Dene</span></b>Klasörden farklı bir resimle önizlemeyi yeniler.</li>
+    <li><b><span class="btn b-gray">Büyük Önizle</span></b>Önizlemeyi büyük bir pencerede açar.</li>
+    <li><b>Filigram Önizleme penceresi</b>Resmin tam boyutlu, yazı ve gölgeli hali.</li>
+    <li><b><span class="btn b-gray">Kapat</span></b>Pencereyi kapatır.</li>
+  </ol>
+  <div class="note tip"><div><b>Önce önizleyin</b>Yazı rengi ve gölge yoğunluğunu farklı resimlerle denemek için <i>Başka Resim Dene</i>'yi kullanın. Açık renkli resimde gölge yoğunluğunu artırmak yazıyı daha okunur yapar.</div></div>
+
+  <h3>Şablon, Limit &amp; Saat, Geçmiş</h3>
+  <ul>
+    <li><b>Şablon:</b> <i>Tweetlerde şablon kullan</i> kutusunu açın ve her satıra bir şablon yazın. Her tweet için şablonlardan biri rastgele seçilir. Kullanılabilir yer tutucular: <code>{kelime}</code> <code>{tarih}</code> <code>{saat}</code> <code>{hesap}</code>. Örnek: <code>{kelime} #günaydın</code>. Şablonda <code>{kelime}</code> yoksa kelime başa eklenir; satır sonu için <code>\n</code> yazılabilir. Alttaki satır ilk şablonun nasıl çıkacağını gösterir.</li>
+    <li><b>Limit &amp; Saat:</b> <i>Hesap başına günlük tweet limiti</i> (0 = sınırsız) yazın. İsterseniz <i>Sadece belirli saat aralığında tweet at</i> kutusunu açıp başlangıç ve bitiş saatini <code>SS:DD</code> biçiminde girin. Limiti dolan hesap o gün atlanır. Aralık dışında başlatırsanız program aralığın başlamasını bekler; işlem sırasında aralık biterse kalan hesaplar için durur. Gece yarısını aşan aralıklar (örnek <code>22:00-02:00</code>) desteklenir.</li>
+    <li><b>Geçmiş:</b> Toplam tweet sayısı, bugünkü sayı ve hesap sayısı görünür; <span class="btn b-gray">Yenile</span>, <span class="btn b-blue">Dışa Aktar (CSV)</span> ve <span class="btn b-red">Geçmişi Temizle</span> düğmeleri vardır.</li>
+  </ul>
+
+  <h3 id="efektli">Efektli Yazı Resmi Oluşturucu</h3>
+  <p>Glow (parlama), gölge ve kenarlıklı süslü yazı resimleri üretir. <a href="#tweethavuzu">Tweet Havuzu</a> sayfasındaki <span class="btn b-purple">Efektli Yazı Resmi</span> düğmesiyle açılır. Üretilen resim doğrudan tweete eklenir.</p>
+  <figure>
+    <div class="frame" data-zoom>
+      <img src="resimler/18-efektli-yazi-katmanlar.jpg" alt="Efektli yazı resmi oluşturucu, yazı katmanları">
+      <i class="pin" style="--x:23.2;--y:23.4">1</i><i class="pin" style="--x:35.9;--y:23.4">2</i><i class="pin" style="--x:29.6;--y:26.8">3</i><i class="pin" style="--x:29.6;--y:35.6">4</i><i class="pin" style="--x:21.6;--y:44.5">5</i><i class="pin" style="--x:36.5;--y:47.6">6</i><i class="pin" style="--x:21.6;--y:53.5">7</i><i class="pin" style="--x:21.8;--y:82.1">8</i><i class="pin" style="--x:57.6;--y:52.4">9</i><i class="pin" style="--x:45.5;--y:86.3">10</i><i class="pin" style="--x:55.2;--y:86.3">11</i>
+    </div>
+    <figcaption>Şekil 19 – Efektli Yazı Resmi: yazı katmanları ve yazı ayarları</figcaption>
+  </figure>
+  <ol class="legend">
+    <li><b>Yazı Katmanları</b>Her yazı ayrı bir katmandır. Üstteki düğmelerden (1, 2, 3...) birini seçerek o yazıyı düzenlersiniz.</li>
+    <li><b><span class="btn b-green">+</span></b>Yeni bir yazı katmanı ekler.</li>
+    <li><b><span class="btn b-red">Seçili Yazıyı Sil</span></b>Seçili katmanı kaldırır.</li>
+    <li><b>Seçili Yazı / Kelime / Cümle</b>Katmanın metni. Birden çok satır yazabilirsiniz.</li>
+    <li><b>Font</b>Listeden font seçin (örnek: Impact).</li>
+    <li><b><span class="btn b-gray">Bilgisayardan Font Dosyası Seç</span></b><code>.ttf</code> veya <code>.otf</code> font dosyası yükler.</li>
+    <li><b>Kaydırıcılar</b>Font boyutu, glow yayılma, glow opaklık, kenarlık kalınlığı, yatay ve dikey konum ayrı ayrı ayarlanır; sağda anlık değerleri yazar.</li>
+    <li><b>Gölge ekle</b>Yazıya gölge verir.</li>
+    <li><b>Canlı önizleme</b>Sonuç anında görünür. Yazıyı tutup sürükleyerek yerini değiştirebilirsiniz; seçili yazının etrafında noktalı çerçeve çıkar.</li>
+    <li><b><span class="btn b-green">Resmi Oluştur ve Tweete Ekle</span></b>Resmi üretir ve tweete ekler.</li>
+    <li><b><span class="btn b-gray">Vazgeç</span></b>Hiçbir şey eklemeden pencereyi kapatır.</li>
+  </ol>
+  <figure>
+    <div class="frame" data-zoom>
+      <img src="resimler/19-efektli-yazi-renk-arkaplan.jpg" alt="Efektli yazı resmi oluşturucu, renkler ve arka plan">
+      <i class="pin" style="--x:22.1;--y:21.1">1</i><i class="pin" style="--x:22.1;--y:29.4">2</i><i class="pin" style="--x:22.1;--y:37.6">3</i><i class="pin" style="--x:25.4;--y:45.1">4</i><i class="pin" style="--x:29;--y:54.3">5</i><i class="pin" style="--x:21.6;--y:59.9">6</i><i class="pin" style="--x:29.6;--y:69.6">7</i><i class="pin" style="--x:22.1;--y:84">8</i>
+    </div>
+    <figcaption>Şekil 20 – Efektli Yazı Resmi: renkler ve arka plan</figcaption>
+  </figure>
+  <ol class="legend">
+    <li><b>Yazı Rengi</b>Büyük kutudan veya yandaki hazır renklerden seçin.</li>
+    <li><b>Glow Rengi</b>Yazının çevresindeki parlamanın rengi.</li>
+    <li><b>Kenarlık Rengi</b>Yazı kenarlığının rengi (kalınlık 0 ise görünmez).</li>
+    <li><b>Arkaplan</b>Tüm yazılar için ortaktır. <span class="btn b-blue">Resim Seç</span> ile bilgisayardan resim, <span class="btn b-gray">Düz Renk</span> ile tek renk kullanın.</li>
+    <li><b>Resim Kare Oranı</b><i>Resmin Kendi Oranı</i> veya kare gibi hazır oranlar.</li>
+    <li><b>Resim Yakınlaştırma (%)</b>Arka plan resmini büyütür.</li>
+    <li><b>Resmi Kaydır</b>Ok düğmeleriyle yukarı, aşağı, sağa, sola kaydırır; <i>Ortala</i> eski yerine alır. Önizlemede boş alanı sürükleyerek de kaydırabilirsiniz.</li>
+    <li><b>Düz Arkaplan Rengi</b><i>Düz Renk</i> seçiliyken kullanılan renk.</li>
+  </ol>
+  <div class="note info"><div><b>Kaydırma için</b>Resmi kaydırabilmek için önce yakınlaştırmayı artırın veya kare oranını değiştirin; resim zaten alanı tam dolduruyorsa kaydıracak boşluk yoktur.</div></div>
+</section>
+
+<!-- 13 -->
 <section id="zaman">
-  <div class="sec-head"><div class="num">12</div><h2>Otomatik Tweet (Zamanlama)</h2></div>
-  <p class="lead">Proje danışıp tweet seçip saat belirleyin; program açıkken o saatte tweet otomatik atılır.</p>
+  <div class="sec-head"><div class="num">13</div><h2>Otomatik Tweet (Zamanlama)</h2></div>
+  <p class="lead">Proje ve tweet seçip saat belirleyin; program açıkken o saatte tweet otomatik atılır.</p>
   <figure>
     <div class="frame" data-zoom>
       <img src="resimler/12-otomatik-tweet.jpg" alt="Otomatik Tweet sayfası">
@@ -527,12 +654,13 @@ footer{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);color:v
     <li><b>Zamanlanmış Tweetler</b>Her satırda tarih, proje, hesap, tweet metni ve durum bulunur: <b style="color:#60a5fa">Bekliyor</b> / <b style="color:#4ade80">Tamamlandı</b>. Bekleyen kayıtlarda <b>kalan süre geri sayım</b> olarak akar. Her satırın sonunda <span class="btn b-red">Sil</span> düğmesi vardır.</li>
     <li><b><span class="btn b-gray">Bitenleri Temizle</span></b>Tamamlanan kayıtları listeden kaldırır.</li>
   </ol>
-  <div class="note warn"><div><b>Program açık kalmalı</b>Zamanlanmış tweetler yalnızca program çalışırken atılır. Bilgisayarı kapatırsanız veya programı kapatırsanız saati gelen tweet atılmaz.</div></div>
+  <div class="note warn"><div><b>Program açık kalmalı</b>Zamanlanmış tweetler yalnızca program çalışırken atılır. Bilgisayarı kapatırsanız veya programı kapatırsanız (X ya da System Tray'den Çıkış) saati gelen tweet atılmaz.</div></div>
+  <div class="note tip"><div><b>Arka planda bırakabilirsiniz</b>Pencereyi küçültürseniz (<b>–</b>) program saatin yanındaki System Tray'e iner ve zamanlanmış tweetler atılmaya devam eder. Ayrıntı: <a href="#arayuz">Arka planda çalışma</a>.</div></div>
 </section>
 
-<!-- 13 -->
+<!-- 14 -->
 <section id="takipci">
-  <div class="sec-head"><div class="num">13</div><h2>Takipçi Takibi</h2></div>
+  <div class="sec-head"><div class="num">14</div><h2>Takipçi Takibi</h2></div>
   <p class="lead">Seçili hesaplar, hedef hesapların takipçi listesine girip oradaki kişileri takip eder; ya da doğrudan tek bir hedef hesabı takip eder.</p>
   <figure>
     <div class="frame" data-zoom>
@@ -555,9 +683,9 @@ footer{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);color:v
   </ol>
 </section>
 
-<!-- 14 -->
+<!-- 15 -->
 <section id="ayarlar">
-  <div class="sec-head"><div class="num">14</div><h2>Sistem Ayarları</h2></div>
+  <div class="sec-head"><div class="num">15</div><h2>Sistem Ayarları</h2></div>
   <p class="lead">Bekleme süreleri, Chrome yolu, mobil cihaz taklidi, profil ısındırma ve ban koruması ayarları.</p>
   <h3>Hız, Chrome ve cihaz</h3>
   <figure>
@@ -585,22 +713,29 @@ footer{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);color:v
   <figure>
     <div class="frame" data-zoom>
       <img src="resimler/15-sistem-ayarlari-2.jpg" alt="Sistem Ayarları ikinci bölüm">
-      <i class="pin" style="--x:15.4;--y:41.9">1</i><i class="pin" style="--x:39.4;--y:41.9">2</i><i class="pin" style="--x:15.4;--y:70.7">3</i><i class="pin" style="--x:15.4;--y:79.4">4</i>
+<i class="pin" style="--x:15.7;--y:14.1">1</i><i class="pin" style="--x:40.9;--y:12.5">2</i><i class="pin" style="--x:18.4;--y:19.4">3</i><i class="pin" style="--x:16;--y:28">4</i><i class="pin" style="--x:16;--y:36.8">5</i><i class="pin" style="--x:16;--y:42.8">6</i><i class="pin" style="--x:16;--y:48.7">7</i><i class="pin" style="--x:16;--y:51.6">8</i><i class="pin" style="--x:22.5;--y:57.7">9</i><i class="pin" style="--x:22;--y:66.5">10</i><i class="pin" style="--x:19;--y:85.9">11</i>
     </div>
-    <figcaption>Şekil 15 – Sistem Ayarları (alt bölüm)</figcaption>
+    <figcaption>Şekil 15 – Sistem Ayarları (alt bölüm: ısınma siteleri, ban koruması, günlük limitler)</figcaption>
   </figure>
   <ol class="legend">
-    <li><b>Isınma Siteleri</b>Profil ısıtılırken gezilecek siteler; her satırda bir adres (Google, YouTube, Vikipedi, Hürriyet, Sözcü, Trendyol, Hepsiburada, Ekşi Sözlük, NTV gibi).</li>
+    <li><b>Isınma Siteleri</b>Profil ısıtılırken gezilecek siteler; her satırda bir adres (örnek: <code>https://eksisozluk.com/</code>, <code>https://www.ntv.com.tr/</code>).</li>
     <li><b><span class="btn b-red">Sil</span></b>Satırdaki siteyi listeden çıkarır.</li>
     <li><b><span class="btn b-blue">+ Site Ekle</span></b>Yeni boş satır ekler.</li>
-    <li><b>İnsan Gibi Davranış (ban koruması)</b>Hesap başına sabit tarayıcı kimliği, saat dilimi ve dili proxy konumuna uydurma, yeni/uzun süredir kullanılmayan hesaplarda kademeli hız, gerçekçi gezinme (kaydırma, okuma duraklaması, fare hareketi).</li>
+    <li><b>İnsan Gibi Davranış (ban koruması)</b>Aşağıdaki kutuların ilk grubu: hesap başına sabit tarayıcı kimliği (User-Agent, pencere boyutu, dil, ekran), saat dilimi ve dili proxy konumuna uydurma ve gerçekçi gezinme (kaydırma, okuma duraklaması, fare hareketi, bazı tweetleri atlama).</li>
+    <li><b>Doğal mola ve yazım hatası</b><i>Birkaç işlemden sonra 5-15 dakika doğal mola ver</i> ve <i>Yazarken ara sıra yazım hatası yap ve düzelt</i>.</li>
+    <li><b>Bekleme ve beğeni boşluğu</b><i>Hesaplar arası bekleme süresini uzat</i> ayarlanan süreye ek rastgele süre ekler. <i>Aynı tweeti beğenen hesaplar arasına rastgele boşluk koy</i> seçeneği aynı tweeti beğenen hesaplar arasına 3-12 dk koyar.</li>
+    <li><b>Referer</b><i>x.com'a Google / t.co gibi gerçek bir yönlendirenle giriş yap</i>: hesap siteye doğrudan değil, bir bağlantıdan gelmiş gibi açılır.</li>
+    <li><b>Gün atlama</b><i>Bazı hesaplar bazı günleri işlemsiz geçirsin</i>: çoklu hesapta her gün tüm hesaplar çalışmaz, daha doğal görünür.</li>
+    <li><b>Çalışma saatleri</b><i>Sadece çalışma saatlerinde işlem yap</i> kutusunu açıp başlangıç ve bitiş saatini yazın (örnek: <code>09:00</code> - <code>23:30</code>). Aralık dışında program işlem yapmaz.</li>
+    <li><b>Günlük Limitler</b>Hesap başına bir günde en fazla Beğeni, Yorum, Takip, Retweet (RT) ve Video izleme sayısı. <code>0</code> sınırsız demektir. Limiti program değil siz belirlersiniz; limiti dolan hesap o gün atlanır.</li>
+    <li><b><span class="btn b-blue">Ayarları Kaydet</span></b>Tüm ayarları kaydeder. Değişiklikten sonra mutlaka basın.</li>
   </ol>
   <div class="note warn"><div><b>Mümkünse varsayılanları koruyun</b>Min/Max bekleme değerlerini çok düşürmek ve koruma kutularını kapatmak hesapların kısıtlanma ihtimalini artırır.</div></div>
 </section>
 
-<!-- 15 -->
+<!-- 16 -->
 <section id="hizli">
-  <div class="sec-head"><div class="num">15</div><h2>Hızlı Başlangıç</h2></div>
+  <div class="sec-head"><div class="num">16</div><h2>Hızlı Başlangıç</h2></div>
   <p class="lead">Sıfırdan ilk işleminize kadar izlenecek 10 adım.</p>
   <ol class="steps">
     <li><b>Chrome ve lisansı kontrol edin.</b> Sistem Ayarları'nda Chrome yolunun doğru olduğunu görün.</li>
@@ -614,11 +749,12 @@ footer{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);color:v
     <li><b>İşlemi başlatın.</b> <i>İşlemler &amp; Otomasyon</i> sayfasında hesapları seçip istediğiniz düğmeye basın.</li>
     <li><b>Canlı izleyin.</b> <i>Genel Bakış</i>, <i>Chrome İzleme</i> ve İşlem Günlüğü'nden akışı takip edin; gerekirse <span class="btn b-orange">Duraklat</span> veya <span class="btn b-red">Durdur</span> deyin.</li>
   </ol>
+  <div class="note tip"><div><b>Sonrası</b>Pencereyi küçültüp (<b>–</b>) System Tray'e indirerek programı arka planda çalıştırabilirsiniz. Kelime ve resimle tweet atmak için <a href="#kelimetweet">Kelime &amp; Resim Tweet</a>, saatli tweetler için <a href="#zaman">Otomatik Tweet</a> bölümüne bakın.</div></div>
 </section>
 
-<!-- 16 -->
+<!-- 17 -->
 <section id="guvenli">
-  <div class="sec-head"><div class="num">16</div><h2>Güvenli Kullanım Önerileri</h2></div>
+  <div class="sec-head"><div class="num">17</div><h2>Güvenli Kullanım Önerileri</h2></div>
   <p class="lead">Hesapları uzun süre sağlıklı tutmak için pratik kurallar.</p>
   <table>
     <thead><tr><th>Konu</th><th>Öneri</th></tr></thead>
@@ -628,19 +764,27 @@ footer{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);color:v
       <tr><td><b>Bekleme</b></td><td>Min/Max aralığını geniş tutun (örnek 30–60 sn). Çok kısa aralık spam gibi görünür.</td></tr>
       <tr><td><b>Isınma</b></td><td>Profil ısındırmayı açık bırakın; hesap gerçek kullanıcı gibi çerez ve geçmiş biriktirir.</td></tr>
       <tr><td><b>Cihaz</b></td><td>Hesap telefonla açıldıysa mobil modu açık tutun; cihaz kimliği her hesapta sabit kalır.</td></tr>
-      <tr><td><b>Günlük sınır</b></td><td>Hesap başına günlük beğeni ve yorum sınırı vardır; sayaç günlükte <i>bugün 2/15</i> gibi görünür.</td></tr>
+      <tr><td><b>Günlük sınır</b></td><td>Sistem Ayarları'ndaki <i>Günlük Limitler</i> bölümünden beğeni, yorum, takip, RT ve video için hesap başına günlük sınır koyun (0 = sınırsız). Sayaç günlükte <i>bugün 2/15</i> gibi görünür. Kelime &amp; Resim Tweet'in kendi günlük tweet limiti ayrıdır.</td></tr>
+      <tr><td><b>Ban koruması</b></td><td>Sistem Ayarları'ndaki <i>İnsan Gibi Davranış</i> kutularını açık tutun: doğal mola, gezinme, Referer ve çalışma saatleri hesabın gerçek kullanıcı gibi görünmesine yardım eder.</td></tr>
+      <tr><td><b>Filigram ve şablon</b></td><td>Çok hesapta aynı yazıyı ve aynı resmi atmaktan kaçının: Kelime &amp; Resim Tweet'te rastgele kelime/medya, birden çok şablon ve farklı filigram metni kullanın.</td></tr>
       <tr><td><b>Askı</b></td><td>Askıya düşen hesabı hemen işaretleyin ki otomasyona alınmasın.</td></tr>
     </tbody>
   </table>
 </section>
 
-<!-- 17 -->
+<!-- 18 -->
 <section id="sss">
-  <div class="sec-head"><div class="num">17</div><h2>Sık Sorulanlar &amp; Sorun Giderme</h2></div>
+  <div class="sec-head"><div class="num">18</div><h2>Sık Sorulanlar &amp; Sorun Giderme</h2></div>
   <details><summary>Günlükte "Giriş yapıldı" yazıyor ama tarayıcıda "Giriş yap" görünüyor</summary><p>Token (çerez) geçersiz olmuş veya hesap kapanmış olabilir. Chrome İzleme'den ekrana bakın, hesabı tarayıcıda açıp kontrol edin ve gerekirse yeni token ile yeniden ekleyin.</p></details>
-  <details><summary>Beğeni yapılıyor ama yorum yazılmıyor</summary><p>İşlemler &amp; Otomasyon sayfasında <b>Beğenirken hazır yorum da yaz</b> kutusunun açık olduğunu ve Hazır Yorumlar havuzunda bulunduğunu kontrol edin. Yorum için seçilen tweet (örneğin <i>Son tweet</i>) de uygun olmalıdır.</p></details>
+  <details><summary>Beğeni yapılıyor ama yorum yazılmıyor</summary><p>İşlemler &amp; Otomasyon sayfasında <b>Beğenirken hazır yorum da yaz</b> kutusunun açık olduğunu ve Hazır Yorumlar havuzunda yorum bulunduğunu kontrol edin. Yorum için seçilen tweet (örneğin <i>Son tweet</i>) de uygun olmalıdır.</p></details>
   <details><summary>Bekleme çok uzun / çok kısa</summary><p>Sistem Ayarları'ndaki Min ve Max Bekleme Süresi'ni değiştirin. Süre her seferinde bu aralıktan rastgele seçilir. Kalan süre sağ üstte <b>Bekleme</b> göstergesinden izlenir.</p></details>
-  <details><summary>Zamanlanmış tweet atılmadı</summary><p>Program o saatte açık olmalıdır. Listede durum <b>Bekliyor</b> kalmışsa saati ve tarihi kontrol edin; geri sayım sıfırlandığında tweet atılır.</p></details>
+  <details><summary>Pencereyi küçülttüm, program nereye gitti?</summary><p>Program görev çubuğundan kalkıp saatin yanındaki System Tray'e iner. Simgeyi göremiyorsanız <b>^</b> (gizli simgeler) okuna tıklayın. Simgeye çift tıklayarak veya sağ tıklayıp <i>Göster</i> diyerek geri açarsınız. İşlemler ve zamanlanmış tweetler bu sırada çalışmaya devam eder.</p></details>
+  <details><summary>X'e bastım, tweetler atılmadı</summary><p>X düğmesi programı tamamen kapatır. Arka planda çalışmasını istiyorsanız X yerine küçült (<b>–</b>) düğmesini kullanın.</p></details>
+  <details><summary>Kelime &amp; Resim Tweet: "Eklenecek kelime yok" uyarısı</summary><p>Kelime kutusu boş. Kelimeleri alt alta yazın veya yapıştırın, sonra <i>Listeye Ekle</i> deyin.</p></details>
+  <details><summary>Kelime &amp; Resim Tweet: kelimeler bitti / tweet atılmıyor</summary><p>Kullanılan kelimeler tekrar seçilmez. <i>Kelimeler</i> sekmesinde bekleyen sayısına bakın; yeni kelime ekleyin veya <i>Kullanılanları Temizle</i> deyin. Ayrıca <i>Limit &amp; Saat</i> sekmesindeki günlük limit ve saat aralığını kontrol edin.</p></details>
+  <details><summary>Kelime &amp; Resim Tweet: resim bulunamadı</summary><p>Klasör yolunu kontrol edin, <span class="btn b-gray">Yenile</span> düğmesine basın ve altta <i>X dosya bulundu</i> yazdığını görün. Desteklenen türler resim, GIF ve videodur.</p></details>
+  <details><summary>Filigram yazısı resimde okunmuyor</summary><p><i>Filigram</i> sekmesinde yazı rengini, yazı boyutunu ve siyah gölge yoğunluğunu değiştirin; <i>Başka Resim Dene</i> ile farklı resimlerde sonucu önizleyin.</p></details>
+  <details><summary>Zamanlanmış tweet atılmadı</summary><p>Program o saatte açık olmalıdır (System Tray'de çalışması da yeterlidir). Listede durum <b>Bekliyor</b> kalmışsa saati ve tarihi kontrol edin; geri sayım sıfırlandığında tweet atılır.</p></details>
   <details><summary>Chrome açılmıyor</summary><p>Sistem Ayarları'nda <i>Chrome Exe Tam Yolu</i> ve <i>ChromeDriver</i> yolunu kontrol edin. Chrome güncellendiyse eski ChromeDriver uyumsuz olabilir; alanı boş bırakıp otomatik indirmeyi deneyin.</p></details>
   <details><summary>Hesap askıya alınmış görünüyor</summary><p>Hesap Yönetimi'nde <span class="btn b-orange">Askı Kontrolü</span> ile doğrulayın, ardından <span class="btn b-red">Askıya Alındı İşaretle</span> ile işaretleyin.</p></details>
   <details><summary>İşlemi nasıl güvenli durdururum?</summary><p>Geçici bekletmek için <span class="btn b-orange">Duraklat</span>. Tamamen bitirmek ve açık Chrome'ları kapatmak için <span class="btn b-red">Durdur (Chrome'ları Kapat)</span>.</p></details>
